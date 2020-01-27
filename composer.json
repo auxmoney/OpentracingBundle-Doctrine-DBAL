@@ -1,0 +1,6 @@
+{
+  "name": "auxmoney/opentracing-bundle-doctrine",
+  "type": "symfony-bundle",
+  "license": "MIT",
+  "require": {}
+}
