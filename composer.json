@@ -1,5 +1,5 @@
 {
-  "name": "auxmoney/opentracing-bundle-doctrine",
+  "name": "auxmoney/opentracing-bundle-doctrine-dbal",
   "type": "symfony-bundle",
   "license": "MIT",
   "require": {}
