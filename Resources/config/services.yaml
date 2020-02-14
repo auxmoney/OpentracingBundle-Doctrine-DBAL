@@ -1,0 +1,21 @@
+parameters:
+  env(FOO): '64' # TODO: FOO
+
+  auxmoney_opentracing.doctrine.previewLength: '%env(FOO)%'
+
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  auxmoney_opentracing.doctrine.dbal.connection_factory:
+    class: Auxmoney\OpentracingDoctrineDBALBundle\DBAL\TracingConnectionFactory
+    decorates: doctrine.dbal.connection_factory
+    arguments:
+      $connectionFactory: '@auxmoney_opentracing.doctrine.dbal.connection_factory.inner'
+
+  Auxmoney\OpentracingDoctrineDBALBundle\DBAL\SQLStatementFormatter:
+    class: Auxmoney\OpentracingDoctrineDBALBundle\DBAL\SQLStatementFormatterService
+    arguments:
+      $previewLength: '%auxmoney_opentracing.doctrine.previewLength%'
