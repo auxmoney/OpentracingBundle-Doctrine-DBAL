@@ -130,8 +130,9 @@ final class TracingStatement implements IteratorAggregate, Statement
     public function execute($params = null)
     {
         $this->tracing->startActiveSpan($this->statementFormatter->formatForTracer($this->sql));
-        $this->tracing->setTagOfActiveSpan('sql', $this->sql);
+        $this->tracing->setTagOfActiveSpan('sql', $this->sql); # TODO
         $result = $this->statement->execute($params);
+        # TODO: handle result tags
         usleep(5000); // FIXME
         $this->tracing->finishActiveSpan();
         return $result;

@@ -46,6 +46,7 @@ final class TracingDriverConnection implements DBALDriverConnection
         $this->tracing->startActiveSpan($this->statementFormatter->formatForTracer($args[0]));
         $this->tracing->setTagOfActiveSpan('sql', $args[0]); # TODO: centralize default tags, extend tags
         $result = $this->decoratedConnection->query(...$args);
+        # TODO: handle result tags
         usleep(5000); // FIXME
         $this->tracing->finishActiveSpan();
         return $result;
@@ -67,8 +68,9 @@ final class TracingDriverConnection implements DBALDriverConnection
     public function exec($statement)
     {
         $this->tracing->startActiveSpan($this->statementFormatter->formatForTracer($statement));
-        $this->tracing->setTagOfActiveSpan('sql', $statement);
+        $this->tracing->setTagOfActiveSpan('sql', $statement); # TODO
         $result = $this->decoratedConnection->exec($statement);
+        # TODO: handle result tags
         usleep(5000); // FIXME
         $this->tracing->finishActiveSpan();
         return $result;
@@ -98,7 +100,7 @@ final class TracingDriverConnection implements DBALDriverConnection
     public function commit()
     {
         $this->decoratedConnection->commit();
-        $this->tracing->setTagOfActiveSpan('db.transaction', 'ended with commit');
+        $this->tracing->setTagOfActiveSpan('db.transaction.end', 'commit');
         $this->tracing->finishActiveSpan();
         return true;
     }
@@ -109,7 +111,7 @@ final class TracingDriverConnection implements DBALDriverConnection
     public function rollBack()
     {
         $result = $this->decoratedConnection->rollBack();
-        $this->tracing->setTagOfActiveSpan('db.transaction', 'ended with rollBack');
+        $this->tracing->setTagOfActiveSpan('db.transaction.end', 'rollBack');
         $this->tracing->finishActiveSpan();
         return $result;
     }
