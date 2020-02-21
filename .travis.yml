@@ -1,0 +1,6 @@
+language: php
+os: linux
+dist: bionic
+
+script:
+  - composer run-script quality
