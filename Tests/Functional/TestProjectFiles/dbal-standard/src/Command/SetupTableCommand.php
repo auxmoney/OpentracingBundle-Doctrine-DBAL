@@ -29,5 +29,7 @@ class SetupTableCommand extends Command
             str TEXT
         );
         ');
+
+        return 0;
     }
 }
