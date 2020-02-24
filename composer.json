@@ -16,9 +16,11 @@
   "license": "MIT",
   "require": {
     "php": "^7.1.33",
-    "auxmoney/opentracing-bundle-core": "^0.3.5",
+    "ext-json": "*",
+    "auxmoney/opentracing-bundle-core": "^0.3.6",
     "opentracing/opentracing": "1.0.0-beta5@beta",
-    "doctrine/doctrine-bundle": "^1.11|^2.0"
+    "doctrine/doctrine-bundle": "^1.11|^2.0",
+    "doctrine/dbal": "^2.6"
   },
   "require-dev": {
     "roave/security-advisories": "dev-master",

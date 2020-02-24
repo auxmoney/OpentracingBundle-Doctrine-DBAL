@@ -1,4 +1,12 @@
 parameters:
+  # TODO: idea for tags: db.user                                       | toggable
+  # TODO: idea for tags: db.statement                                  | toggable if preview only, preview length configurable / first word
+  # TODO: idea for tags: db.parameters                                 | toggable
+  # TODO: idea for tags: db.row_count (affected rows / returned rows)  | toggable
+
+  # TODO: idea for filter: filter by minimum threshold                 | configurable (0 = no threshold, in ms) -> use explicit timestamp passing as option
+  # TODO: idea for filter: filter by contained string (table name,...) | configurable as list of search strings
+
   env(FOO): '64' # TODO: FOO
 
   auxmoney_opentracing.doctrine.previewLength: '%env(FOO)%'
@@ -19,3 +27,6 @@ services:
     class: Auxmoney\OpentracingDoctrineDBALBundle\DBAL\SQLStatementFormatterService
     arguments:
       $previewLength: '%auxmoney_opentracing.doctrine.previewLength%'
+
+  Auxmoney\OpentracingDoctrineDBALBundle\DBAL\SpanFactory:
+    class: Auxmoney\OpentracingDoctrineDBALBundle\DBAL\SQLSpanFactory

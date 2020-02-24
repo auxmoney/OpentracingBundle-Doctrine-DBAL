@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Auxmoney\OpentracingDoctrineDBALBundle\DBAL;
 
-use Auxmoney\OpentracingBundle\Service\Tracing;
 use Doctrine\DBAL\Driver\Statement;
 use IteratorAggregate;
 
@@ -18,23 +17,23 @@ final class TracingStatement implements IteratorAggregate, Statement
      * @var Statement<Statement>
      */
     private $statement;
-    private $tracing;
     private $sql;
-    private $statementFormatter;
+    private $spanFactory;
+    private $username;
 
     /**
      * @param Statement<Statement> $statement
      */
     public function __construct(
         Statement $statement,
-        Tracing $tracing,
-        SQLStatementFormatter $statementFormatter,
-        string $sql
+        SpanFactory $spanFactory,
+        string $sql,
+        ?string $username
     ) {
         $this->statement = $statement;
-        $this->tracing = $tracing;
-        $this->statementFormatter = $statementFormatter;
+        $this->spanFactory = $spanFactory;
         $this->sql = $sql;
+        $this->username = $username;
     }
 
     /**
@@ -63,24 +62,24 @@ final class TracingStatement implements IteratorAggregate, Statement
 
     /**
      * @param int|null $fetchMode
-     * @param int|null $cursorOrientation
-     * @param int|null $cursorOffset
+     * @param int $cursorOrientation
+     * @param int $cursorOffset
      * @return mixed
      */
-    public function fetch($fetchMode = null, $cursorOrientation = null, $cursorOffset = null)
+    public function fetch($fetchMode = null, $cursorOrientation = 0, $cursorOffset = 0)
     {
-        return $this->statement->fetch($fetchMode = null, $cursorOrientation = null, $cursorOffset = null);
+        return $this->statement->fetch($fetchMode, $cursorOrientation, $cursorOffset);
     }
 
     /**
      * @param int|null $fetchMode
-     * @param mixed|null $fetchArgument
+     * @param int|null $fetchArgument
      * @param array<mixed>|null $ctorArgs
      * @return array<mixed>
      */
     public function fetchAll($fetchMode = null, $fetchArgument = null, $ctorArgs = null)
     {
-        return $this->statement->fetchAll($fetchMode = null, $fetchArgument = null, $ctorArgs = null);
+        return $this->statement->fetchAll($fetchMode, $fetchArgument, $ctorArgs);
     }
 
     /**
@@ -129,12 +128,10 @@ final class TracingStatement implements IteratorAggregate, Statement
      */
     public function execute($params = null)
     {
-        $this->tracing->startActiveSpan($this->statementFormatter->formatForTracer($this->sql));
-        $this->tracing->setTagOfActiveSpan('sql', $this->sql); # TODO
+        $this->spanFactory->beforeOperation($this->sql, $params ?? [], $this->username);
         $result = $this->statement->execute($params);
-        # TODO: handle result tags
-        usleep(5000); // FIXME
-        $this->tracing->finishActiveSpan();
+        usleep(25000); // FIXME
+        $this->spanFactory->afterOperation($this->sql, $params ?? [], $this->username, $this->statement->rowCount());
         return $result;
     }
 

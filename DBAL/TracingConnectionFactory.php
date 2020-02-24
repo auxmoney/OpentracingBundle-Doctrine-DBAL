@@ -17,16 +17,16 @@ final class TracingConnectionFactory
 {
     private $connectionFactory;
     private $tracing;
-    private $statementFormatter;
+    private $spanFactory;
 
     public function __construct(
         DoctrineConnectionFactory $connectionFactory,
         Tracing $tracing,
-        SQLStatementFormatter $statementFormatter
+        SpanFactory $spanFactory
     ) {
         $this->connectionFactory = $connectionFactory;
         $this->tracing = $tracing;
-        $this->statementFormatter = $statementFormatter;
+        $this->spanFactory = $spanFactory;
     }
 
     /**
@@ -44,7 +44,8 @@ final class TracingConnectionFactory
         $driverConnection = new TracingDriverConnection(
             $connection->getWrappedConnection(),
             $this->tracing,
-            $this->statementFormatter
+            $this->spanFactory,
+            $connection->getUsername()
         );
         $reflectionObject = new ReflectionObject($connection);
         $property = $reflectionObject->getProperty('_conn');

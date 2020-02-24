@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Auxmoney\OpentracingDoctrineDBALBundle\DBAL;
 
+use Auxmoney\OpentracingDoctrineDBALBundle\OpentracingDoctrineDBALBundle;
+
 final class SQLStatementFormatterService implements SQLStatementFormatter
 {
     private $previewLength;
@@ -15,6 +17,7 @@ final class SQLStatementFormatterService implements SQLStatementFormatter
 
     public function formatForTracer(string $string): string
     {
-        return 'SQL: ' . substr($string, 0, $this->previewLength);
+        return OpentracingDoctrineDBALBundle::AUXMONEY_OPENTRACING_BUNDLE_TYPE . ': '
+            . substr($string, 0, $this->previewLength);
     }
 }

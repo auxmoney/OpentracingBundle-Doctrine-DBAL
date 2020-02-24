@@ -15,16 +15,19 @@ final class TracingDriverConnection implements DBALDriverConnection
 {
     private $decoratedConnection;
     private $tracing;
-    private $statementFormatter;
+    private $spanFactory;
+    private $username;
 
     public function __construct(
         DBALDriverConnection $decoratedConnection,
         Tracing $tracing,
-        SQLStatementFormatter $statementFormatter
+        SpanFactory $spanFactory,
+        ?string $username
     ) {
         $this->decoratedConnection = $decoratedConnection;
         $this->tracing = $tracing;
-        $this->statementFormatter = $statementFormatter;
+        $this->spanFactory = $spanFactory;
+        $this->username = $username;
     }
 
     /**
@@ -34,7 +37,7 @@ final class TracingDriverConnection implements DBALDriverConnection
     public function prepare($prepareString)
     {
         $statement = $this->decoratedConnection->prepare($prepareString);
-        return new TracingStatement($statement, $this->tracing, $this->statementFormatter, $prepareString);
+        return new TracingStatement($statement, $this->spanFactory, $prepareString, $this->username);
     }
 
     /**
@@ -43,12 +46,11 @@ final class TracingDriverConnection implements DBALDriverConnection
     public function query()
     {
         $args = func_get_args();
-        $this->tracing->startActiveSpan($this->statementFormatter->formatForTracer($args[0]));
-        $this->tracing->setTagOfActiveSpan('sql', $args[0]); # TODO: centralize default tags, extend tags
+        $parameters = array_slice($args, 1);
+        $this->spanFactory->beforeOperation($args[0], $parameters, $this->username);
         $result = $this->decoratedConnection->query(...$args);
-        # TODO: handle result tags
-        usleep(5000); // FIXME
-        $this->tracing->finishActiveSpan();
+        usleep(15000); // FIXME
+        $this->spanFactory->afterOperation($args[0], $parameters, $this->username, $result->rowCount());
         return $result;
     }
 
@@ -67,12 +69,10 @@ final class TracingDriverConnection implements DBALDriverConnection
      */
     public function exec($statement)
     {
-        $this->tracing->startActiveSpan($this->statementFormatter->formatForTracer($statement));
-        $this->tracing->setTagOfActiveSpan('sql', $statement); # TODO
+        $this->spanFactory->beforeOperation($statement, [], $this->username);
         $result = $this->decoratedConnection->exec($statement);
-        # TODO: handle result tags
         usleep(5000); // FIXME
-        $this->tracing->finishActiveSpan();
+        $this->spanFactory->afterOperation($statement, [], $this->username, $result);
         return $result;
     }
 
@@ -89,7 +89,7 @@ final class TracingDriverConnection implements DBALDriverConnection
      */
     public function beginTransaction()
     {
-        $this->tracing->startActiveSpan('SQL: (transaction)');
+        $this->tracing->startActiveSpan('DBAL: (transaction)'); # FIXME
         $this->decoratedConnection->beginTransaction();
         return true;
     }
@@ -100,7 +100,7 @@ final class TracingDriverConnection implements DBALDriverConnection
     public function commit()
     {
         $this->decoratedConnection->commit();
-        $this->tracing->setTagOfActiveSpan('db.transaction.end', 'commit');
+        $this->tracing->setTagOfActiveSpan('db.transaction.end', 'commit'); # FIXME
         $this->tracing->finishActiveSpan();
         return true;
     }
@@ -111,7 +111,7 @@ final class TracingDriverConnection implements DBALDriverConnection
     public function rollBack()
     {
         $result = $this->decoratedConnection->rollBack();
-        $this->tracing->setTagOfActiveSpan('db.transaction.end', 'rollBack');
+        $this->tracing->setTagOfActiveSpan('db.transaction.end', 'rollBack'); # FIXME
         $this->tracing->finishActiveSpan();
         return $result;
     }
