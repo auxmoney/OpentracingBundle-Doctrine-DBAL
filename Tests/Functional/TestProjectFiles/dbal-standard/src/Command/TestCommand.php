@@ -48,7 +48,7 @@ class TestCommand extends Command
         Assert::eq($this->connection->delete('test_table', ['id' => $id]), 1);
         Assert::eq($this->connection->fetchAssoc('SELECT COUNT(*) FROM test_table WHERE str IS NOT NULL')['COUNT(*)'], 0);
 
-        Assert::eq(0, $this->connection->exec('UPDATE transactions_table SET str = NULL WHERE str IS NOT NULL'));
+        Assert::eq(0, $this->connection->exec('UPDATE test_table SET str = NULL WHERE str IS NOT NULL'));
 
         $carrier = [];
         $this->opentracing->getTracerInstance()->inject($this->opentracing->getTracerInstance()->getActiveSpan()->getContext(), TEXT_MAP, $carrier);

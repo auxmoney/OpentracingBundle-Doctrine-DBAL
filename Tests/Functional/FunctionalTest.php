@@ -14,6 +14,6 @@ class FunctionalTest extends JaegerFunctionalTest
 
         $this->runInTestProject(['symfony', 'console', 'test:doctrine:setup-table']);
         $this->runInTestProject(['symfony', 'console', 'test:doctrine:tracing']);
-        self::assertSame(true, true);
+        self::assertSame(true, true); // FIXME
     }
 }
