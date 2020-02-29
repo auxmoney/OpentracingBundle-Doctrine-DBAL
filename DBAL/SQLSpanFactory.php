@@ -23,12 +23,21 @@ class SQLSpanFactory implements SpanFactory
         $this->tracing = $tracing;
     }
 
-    public function beforeOperation(string $sql, array $parameters, ?string $username): void
+    public function beforeOperation(string $sql): void
     {
         $this->tracing->startActiveSpan($this->statementFormatter->formatForTracer($sql));
     }
 
     public function afterOperation(string $sql, array $parameters, ?string $username, int $affectedRowCount): void
+    {
+        $this->addGeneralTags($username);
+        $this->tracing->setTagOfActiveSpan(DATABASE_STATEMENT, $sql);
+        $this->tracing->setTagOfActiveSpan('db.parameters', json_encode($parameters));
+        $this->tracing->setTagOfActiveSpan('db.row_count', $affectedRowCount);
+        $this->tracing->finishActiveSpan();
+    }
+
+    public function addGeneralTags(?string $username): void
     {
         $this->tracing->setTagOfActiveSpan(SPAN_KIND, SPAN_KIND_RPC_CLIENT);
         $this->tracing->setTagOfActiveSpan(
@@ -37,9 +46,5 @@ class SQLSpanFactory implements SpanFactory
         );
         $this->tracing->setTagOfActiveSpan(DATABASE_TYPE, 'sql');
         $this->tracing->setTagOfActiveSpan(DATABASE_USER, $username);
-        $this->tracing->setTagOfActiveSpan(DATABASE_STATEMENT, $sql);
-        $this->tracing->setTagOfActiveSpan('db.parameters', json_encode($parameters));
-        $this->tracing->setTagOfActiveSpan('db.row_count', $affectedRowCount); # FIXME: buggy for SELECT?
-        $this->tracing->finishActiveSpan();
     }
 }

@@ -47,7 +47,7 @@ final class TracingDriverConnection implements DBALDriverConnection
     {
         $args = func_get_args();
         $parameters = array_slice($args, 1);
-        $this->spanFactory->beforeOperation($args[0], $parameters, $this->username);
+        $this->spanFactory->beforeOperation($args[0]);
         $result = $this->decoratedConnection->query(...$args);
         usleep(15000); // FIXME
         $this->spanFactory->afterOperation($args[0], $parameters, $this->username, $result->rowCount());
@@ -69,7 +69,7 @@ final class TracingDriverConnection implements DBALDriverConnection
      */
     public function exec($statement)
     {
-        $this->spanFactory->beforeOperation($statement, [], $this->username);
+        $this->spanFactory->beforeOperation($statement);
         $result = $this->decoratedConnection->exec($statement);
         usleep(5000); // FIXME
         $this->spanFactory->afterOperation($statement, [], $this->username, $result);
@@ -89,7 +89,8 @@ final class TracingDriverConnection implements DBALDriverConnection
      */
     public function beginTransaction()
     {
-        $this->tracing->startActiveSpan('DBAL: (transaction)'); # FIXME
+        $this->tracing->startActiveSpan('DBAL: (transaction)');
+        $this->spanFactory->addGeneralTags($this->username);
         $this->decoratedConnection->beginTransaction();
         return true;
     }
@@ -100,7 +101,7 @@ final class TracingDriverConnection implements DBALDriverConnection
     public function commit()
     {
         $this->decoratedConnection->commit();
-        $this->tracing->setTagOfActiveSpan('db.transaction.end', 'commit'); # FIXME
+        $this->tracing->setTagOfActiveSpan('db.transaction.end', 'commit');
         $this->tracing->finishActiveSpan();
         return true;
     }
@@ -111,7 +112,7 @@ final class TracingDriverConnection implements DBALDriverConnection
     public function rollBack()
     {
         $result = $this->decoratedConnection->rollBack();
-        $this->tracing->setTagOfActiveSpan('db.transaction.end', 'rollBack'); # FIXME
+        $this->tracing->setTagOfActiveSpan('db.transaction.end', 'rollBack');
         $this->tracing->finishActiveSpan();
         return $result;
     }

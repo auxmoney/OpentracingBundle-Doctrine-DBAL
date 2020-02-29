@@ -128,7 +128,7 @@ final class TracingStatement implements IteratorAggregate, Statement
      */
     public function execute($params = null)
     {
-        $this->spanFactory->beforeOperation($this->sql, $params ?? [], $this->username);
+        $this->spanFactory->beforeOperation($this->sql);
         $result = $this->statement->execute($params);
         usleep(25000); // FIXME
         $this->spanFactory->afterOperation($this->sql, $params ?? [], $this->username, $this->statement->rowCount());

@@ -51,7 +51,21 @@ TODO!
 
 ## Usage
 
-When querying databases using Doctrine DBAL (or higher level packages like Doctrine ORM), spans reflecting these queries are automatically generated and added to the current traces.
+When querying databases using Doctrine DBAL (or higher level packages like Doctrine ORM), spans reflecting these queries are automatically generated and added to the trace. The generated tags can contain:
+
+| tag name | contains |
+|---|---|
+| db.user | the username of the decorated DBAL connection | 
+| db.statement | the executed statement |
+| db.parameters | the parameters of the executed statement, if present |
+| db.row_count | affected rows / returned rows of the executed statement; see [limitations section](#limitations) |
+
+## Limitations
+
+* `db.row_count`: the correctness of this value depends heavily on the implementation of the `Doctrine\DBAL\Driver\Statement` of the driver for the database.
+For example, if you are using a PDO driver, keep in mind: "For most databases, PDOStatement::rowCount() does not return the number of rows 
+affected by a SELECT statement.". See [the official PHP documentation](https://www.php.net/manual/en/pdostatement.rowcount.php) for more information on this particular topic.
+If you are getting different results than expected, consult the documentation for the used driver.
 
 ## Development
 
