@@ -25,23 +25,11 @@ class SQLSpanFactory implements SpanFactory
 
     public function beforeOperation(string $sql, array $parameters, ?string $username): void
     {
-        if (!$this->startSpansAfterOperation()) {
-            $this->tracing->startActiveSpan($this->statementFormatter->formatForTracer($sql));
-        }
-        // else {
-            // TODO: store time - stopwatch? stackable!
-        // }
+        $this->tracing->startActiveSpan($this->statementFormatter->formatForTracer($sql));
     }
 
     public function afterOperation(string $sql, array $parameters, ?string $username, int $affectedRowCount): void
     {
-        if ($this->startSpansAfterOperation()) {
-            // TODO: calc time spent - stopwatch? stackable!
-            $this->tracing->startActiveSpan(
-                $this->statementFormatter->formatForTracer($sql),
-                ['start_time' => '???']
-            );
-        }
         $this->tracing->setTagOfActiveSpan(SPAN_KIND, SPAN_KIND_RPC_CLIENT);
         $this->tracing->setTagOfActiveSpan(
             'span.source',
@@ -53,10 +41,5 @@ class SQLSpanFactory implements SpanFactory
         $this->tracing->setTagOfActiveSpan('db.parameters', json_encode($parameters));
         $this->tracing->setTagOfActiveSpan('db.row_count', $affectedRowCount); # FIXME: buggy for SELECT?
         $this->tracing->finishActiveSpan();
-    }
-
-    private function startSpansAfterOperation(): bool
-    {
-        return false;
     }
 }

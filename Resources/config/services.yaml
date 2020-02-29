@@ -4,7 +4,6 @@ parameters:
   # TODO: idea for tags: db.parameters                                 | toggable
   # TODO: idea for tags: db.row_count (affected rows / returned rows)  | toggable
 
-  # TODO: idea for filter: filter by minimum threshold                 | configurable (0 = no threshold, in ms) -> use explicit timestamp passing as option
   # TODO: idea for filter: filter by contained string (table name,...) | configurable as list of search strings
 
   env(FOO): '64' # TODO: FOO
