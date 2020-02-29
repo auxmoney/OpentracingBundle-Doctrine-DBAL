@@ -89,7 +89,7 @@ final class TracingDriverConnection implements DBALDriverConnection
      */
     public function beginTransaction()
     {
-        $this->tracing->startActiveSpan('DBAL: (transaction)');
+        $this->tracing->startActiveSpan('DBAL: TRANSACTION');
         $this->spanFactory->addGeneralTags($this->username);
         $this->decoratedConnection->beginTransaction();
         return true;

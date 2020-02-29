@@ -16,11 +16,25 @@ class SQLSpanFactory implements SpanFactory
 {
     private $statementFormatter;
     private $tracing;
+    private $tagFullStatement;
+    private $tagParameters;
+    private $tagRowCount;
+    private $tagUser;
 
-    public function __construct(SQLStatementFormatter $statementFormatter, Tracing $tracing)
-    {
+    public function __construct(
+        SQLStatementFormatter $statementFormatter,
+        Tracing $tracing,
+        string $tagFullStatement,
+        string $tagParameters,
+        string $tagRowCount,
+        string $tagUser
+    ) {
         $this->statementFormatter = $statementFormatter;
         $this->tracing = $tracing;
+        $this->tagFullStatement = filter_var($tagFullStatement, FILTER_VALIDATE_BOOLEAN);
+        $this->tagParameters = filter_var($tagParameters, FILTER_VALIDATE_BOOLEAN);
+        $this->tagRowCount = filter_var($tagRowCount, FILTER_VALIDATE_BOOLEAN);
+        $this->tagUser = filter_var($tagUser, FILTER_VALIDATE_BOOLEAN);
     }
 
     public function beforeOperation(string $sql): void
@@ -31,9 +45,15 @@ class SQLSpanFactory implements SpanFactory
     public function afterOperation(string $sql, array $parameters, ?string $username, int $affectedRowCount): void
     {
         $this->addGeneralTags($username);
-        $this->tracing->setTagOfActiveSpan(DATABASE_STATEMENT, $sql);
-        $this->tracing->setTagOfActiveSpan('db.parameters', json_encode($parameters));
-        $this->tracing->setTagOfActiveSpan('db.row_count', $affectedRowCount);
+        if ($this->tagFullStatement) {
+            $this->tracing->setTagOfActiveSpan(DATABASE_STATEMENT, $sql);
+        }
+        if ($this->tagParameters) {
+            $this->tracing->setTagOfActiveSpan('db.parameters', json_encode($parameters));
+        }
+        if ($this->tagRowCount) {
+            $this->tracing->setTagOfActiveSpan('db.row_count', $affectedRowCount);
+        }
         $this->tracing->finishActiveSpan();
     }
 
@@ -45,6 +65,8 @@ class SQLSpanFactory implements SpanFactory
             OpentracingDoctrineDBALBundle::AUXMONEY_OPENTRACING_BUNDLE_TYPE
         );
         $this->tracing->setTagOfActiveSpan(DATABASE_TYPE, 'sql');
-        $this->tracing->setTagOfActiveSpan(DATABASE_USER, $username);
+        if ($this->tagUser) {
+            $this->tracing->setTagOfActiveSpan(DATABASE_USER, $username);
+        }
     }
 }

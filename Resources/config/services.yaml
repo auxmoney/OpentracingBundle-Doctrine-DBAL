@@ -1,14 +1,15 @@
 parameters:
-  # TODO: idea for tags: db.user                                       | toggable
-  # TODO: idea for tags: db.statement                                  | toggable if preview only, preview length configurable / first word
-  # TODO: idea for tags: db.parameters                                 | toggable
-  # TODO: idea for tags: db.row_count (affected rows / returned rows)  | toggable
-
   # TODO: idea for filter: filter by contained string (table name,...) | configurable as list of search strings
 
-  env(FOO): '64' # TODO: FOO
+  env(AUXMONEY_OPENTRACING_DOCTRINE_FULL_STATEMENT): 'true'
+  env(AUXMONEY_OPENTRACING_DOCTRINE_PARAMETERS): 'true'
+  env(AUXMONEY_OPENTRACING_DOCTRINE_ROW_COUNT): 'false'
+  env(AUXMONEY_OPENTRACING_DOCTRINE_USER): 'false'
 
-  auxmoney_opentracing.doctrine.previewLength: '%env(FOO)%'
+  auxmoney_opentracing.doctrine.tag_full_statement: '%env(AUXMONEY_OPENTRACING_DOCTRINE_FULL_STATEMENT)%'
+  auxmoney_opentracing.doctrine.tag_parameters: '%env(AUXMONEY_OPENTRACING_DOCTRINE_PARAMETERS)%'
+  auxmoney_opentracing.doctrine.tag_row_count: '%env(AUXMONEY_OPENTRACING_DOCTRINE_ROW_COUNT)%'
+  auxmoney_opentracing.doctrine.tag_user: '%env(AUXMONEY_OPENTRACING_DOCTRINE_USER)%'
 
 services:
   _defaults:
@@ -24,8 +25,11 @@ services:
 
   Auxmoney\OpentracingDoctrineDBALBundle\DBAL\SQLStatementFormatter:
     class: Auxmoney\OpentracingDoctrineDBALBundle\DBAL\SQLStatementFormatterService
-    arguments:
-      $previewLength: '%auxmoney_opentracing.doctrine.previewLength%'
 
   Auxmoney\OpentracingDoctrineDBALBundle\DBAL\SpanFactory:
     class: Auxmoney\OpentracingDoctrineDBALBundle\DBAL\SQLSpanFactory
+    arguments:
+      $tagFullStatement: '%auxmoney_opentracing.doctrine.tag_full_statement%'
+      $tagParameters: '%auxmoney_opentracing.doctrine.tag_parameters%'
+      $tagRowCount: '%auxmoney_opentracing.doctrine.tag_row_count%'
+      $tagUser: '%auxmoney_opentracing.doctrine.tag_user%'

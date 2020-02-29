@@ -8,16 +8,15 @@ use Auxmoney\OpentracingDoctrineDBALBundle\OpentracingDoctrineDBALBundle;
 
 final class SQLStatementFormatterService implements SQLStatementFormatter
 {
-    private $previewLength;
-
-    public function __construct(int $previewLength)
-    {
-        $this->previewLength = $previewLength;
-    }
-
     public function formatForTracer(string $string): string
     {
-        return OpentracingDoctrineDBALBundle::AUXMONEY_OPENTRACING_BUNDLE_TYPE . ': '
-            . substr($string, 0, $this->previewLength);
+        $formattedStatement = substr($string, 0, 32);
+        $matches = [];
+        if (preg_match('/^(SELECT|DELETE).* FROM ([\S]+)/i', $string, $matches) ||
+                preg_match('/^(INSERT INTO|UPDATE) ([\S]+)/i', $string, $matches)) {
+            array_shift($matches);
+            $formattedStatement = implode(' ', $matches);
+        }
+        return OpentracingDoctrineDBALBundle::AUXMONEY_OPENTRACING_BUNDLE_TYPE . ': ' . $formattedStatement;
     }
 }

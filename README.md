@@ -24,7 +24,7 @@ After you have installed the OpentracingBundle:
 * require the dependencies:
 
 ```bash
-    composer req auxmoney/opentracing-bundle-doctrine-dbal:^0.3
+    composer req auxmoney/opentracing-bundle-doctrine-dbal:^0.1
 ```
 
 ### Enable the bundle
@@ -47,7 +47,17 @@ If you are not using it, you need to manually enable the bundle:
 
 ## Configuration
 
-TODO!
+You can optionally configure environment variables, however, the default configuration will run fine out of the box for most DBAL based applications.
+If you cannot change environment variables in your project, you can alternatively overwrite the container parameters directly.
+
+| environment variable | container parameter | type | default | description |
+|---|---|---|---|---|
+| AUXMONEY_OPENTRACING_DOCTRINE_FULL_STATEMENT | auxmoney_opentracing.doctrine.tag_full_statement | `string` | `true` | whether to add a tag with the full SQL statement to the span |
+| AUXMONEY_OPENTRACING_DOCTRINE_PARAMETERS | auxmoney_opentracing.doctrine.tag_parameters | `string` | `true` | whether to add a tag with the statement parameters to the span |
+| AUXMONEY_OPENTRACING_DOCTRINE_ROW_COUNT | auxmoney_opentracing.doctrine.tag_row_count | `string` | `false` | whether to add a tag with the affected / returned rows to the span; see [limitations section](#limitations) |
+| AUXMONEY_OPENTRACING_DOCTRINE_USER | auxmoney_opentracing.doctrine.tag_user | `string` | `false` | whether to add a tag with the connection username to the span |
+
+Hint: you can use `true`, `on`, `yes` or `1` to enable an environment variable.
 
 ## Usage
 
@@ -55,10 +65,10 @@ When querying databases using Doctrine DBAL (or higher level packages like Doctr
 
 | tag name | contains |
 |---|---|
-| db.user | the username of the decorated DBAL connection | 
 | db.statement | the executed statement |
 | db.parameters | the parameters of the executed statement, if present |
-| db.row_count | affected rows / returned rows of the executed statement; see [limitations section](#limitations) |
+| db.row_count | affected / returned rows of the executed statement; see [limitations section](#limitations) |
+| db.user | the username of the decorated DBAL connection | 
 
 ## Limitations
 
