@@ -1,6 +1,4 @@
 parameters:
-  # TODO: idea for filter: filter by contained string (table name,...) | configurable as list of search strings
-
   env(AUXMONEY_OPENTRACING_DOCTRINE_FULL_STATEMENT): 'true'
   env(AUXMONEY_OPENTRACING_DOCTRINE_PARAMETERS): 'true'
   env(AUXMONEY_OPENTRACING_DOCTRINE_ROW_COUNT): 'false'
