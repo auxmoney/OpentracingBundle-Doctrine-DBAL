@@ -107,9 +107,19 @@ class FunctionalTest extends JaegerFunctionalTest
         }
     }
 
+    protected function setUpTestProject(string $projectSetup): void
+    {
+        $this->copyTestProjectFiles($projectSetup);
+
+        $this->composerDumpAutoload();
+        $this->consoleCacheClear();
+    }
+
     protected function tearDown()
     {
         $this->runInTestProject(['symfony', 'console', 'doctrine:database:drop', '--force']);
-        parent::tearDown();
+
+        $this->gitResetTestProject();
+        $this->dockerStopJaeger();
     }
 }
