@@ -12,20 +12,16 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Webmozart\Assert\Assert;
 use const OpenTracing\Formats\TEXT_MAP;
 
-class TestCommand extends Command
+class TestConnectionAPICommand extends Command
 {
     private $connection;
     private $opentracing;
 
     public function __construct(Connection $connection, Opentracing $opentracing)
     {
-        parent::__construct('test:doctrine:tracing');
+        parent::__construct('test:doctrine:dbal-connection-api');
 
-        // TODO: connection injection
-        // TODO: wrapper class injection
-        // TODO: factory injection
-        // TODO: orm + entitymanager
-        // TODO: orm + repositoryclass
+        // TODO: unit tests!
 
         $this->connection = $connection;
         $this->opentracing = $opentracing;
@@ -48,7 +44,7 @@ class TestCommand extends Command
         Assert::eq($this->connection->delete('test_table', ['id' => $id]), 1);
         Assert::eq($this->connection->fetchAssoc('SELECT COUNT(*) FROM test_table WHERE str IS NOT NULL')['COUNT(*)'], 0);
 
-        Assert::eq(0, $this->connection->exec('UPDATE test_table SET str = NULL WHERE str IS NOT NULL'));
+        Assert::eq($this->connection->exec('UPDATE test_table SET str = NULL WHERE str IS NOT NULL'), 0);
 
         $carrier = [];
         $this->opentracing->getTracerInstance()->inject($this->opentracing->getTracerInstance()->getActiveSpan()->getContext(), TEXT_MAP, $carrier);

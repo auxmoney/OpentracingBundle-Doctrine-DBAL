@@ -1,0 +1,146 @@
+operationName: 'test:doctrine:orm-query-builder'
+tags:
+  -
+    key: command.exit-code
+    value: 0
+children:
+  -
+    operationName: 'DBAL: SELECT test_table'
+    tags:
+      -
+        key: db.statement
+        value: 'SELECT COUNT(t0_.id) AS sclr_0 FROM test_table t0_ WHERE t0_.str IS NOT NULL'
+      -
+        key: db.parameters
+        value: '[]'
+  -
+    operationName: 'DBAL: SELECT test_table'
+    tags:
+      -
+        key: db.statement
+        value: 'SELECT COUNT(*) FROM test_table t0'
+      -
+        key: db.parameters
+        value: '[]'
+  -
+    operationName: 'DBAL: TRANSACTION'
+    tags:
+      -
+        key: db.transaction.end
+        value: commit
+    children:
+      -
+        operationName: 'DBAL: INSERT INTO test_table'
+        tags:
+          -
+            key: db.statement
+            value: 'INSERT INTO test_table (str) VALUES (?)'
+          -
+            key: db.parameters
+            value: '[]'
+  -
+    operationName: 'DBAL: SELECT test_table'
+    tags:
+      -
+        key: db.statement
+        value: 'SELECT COUNT(t0_.id) AS sclr_0 FROM test_table t0_ WHERE t0_.str IS NOT NULL'
+      -
+        key: db.parameters
+        value: '[]'
+  -
+    operationName: 'DBAL: SELECT test_table'
+    tags:
+      -
+        key: db.statement
+        value: 'SELECT COUNT(*) FROM test_table t0'
+      -
+        key: db.parameters
+        value: '[]'
+  -
+    operationName: 'DBAL: TRANSACTION'
+    tags:
+      -
+        key: db.transaction.end
+        value: commit
+    children:
+      -
+        operationName: 'DBAL: INSERT INTO test_table'
+        tags:
+          -
+            key: db.statement
+            value: 'INSERT INTO test_table (str) VALUES (?)'
+          -
+            key: db.parameters
+            value: '[]'
+  -
+    operationName: 'DBAL: SELECT test_table'
+    tags:
+      -
+        key: db.statement
+        value: 'SELECT COUNT(t0_.id) AS sclr_0 FROM test_table t0_ WHERE t0_.str IS NOT NULL'
+      -
+        key: db.parameters
+        value: '[]'
+  -
+    operationName: 'DBAL: SELECT test_table'
+    tags:
+      -
+        key: db.statement
+        value: 'SELECT COUNT(*) FROM test_table t0'
+      -
+        key: db.parameters
+        value: '[]'
+  -
+    operationName: 'DBAL: UPDATE test_table'
+    tags:
+      -
+        key: db.statement
+        value: 'UPDATE test_table SET str = NULL WHERE str = ?'
+      -
+        key: db.parameters
+        value: '[]'
+  -
+    operationName: 'DBAL: SELECT test_table'
+    tags:
+      -
+        key: db.statement
+        value: 'SELECT COUNT(t0_.id) AS sclr_0 FROM test_table t0_ WHERE t0_.str IS NOT NULL'
+      -
+        key: db.parameters
+        value: '[]'
+  -
+    operationName: 'DBAL: SELECT test_table'
+    tags:
+      -
+        key: db.statement
+        value: 'SELECT COUNT(*) FROM test_table t0'
+      -
+        key: db.parameters
+        value: '[]'
+  -
+    operationName: 'DBAL: DELETE test_table'
+    tags:
+      -
+        key: db.statement
+        value: 'DELETE FROM test_table WHERE id = 2'
+      -
+        key: db.parameters
+        value: '[]'
+  -
+    operationName: 'DBAL: SELECT test_table'
+    tags:
+      -
+        key: db.statement
+        value: 'SELECT COUNT(t0_.id) AS sclr_0 FROM test_table t0_ WHERE t0_.str IS NOT NULL'
+      -
+        key: db.parameters
+        value: '[]'
+  -
+    operationName: 'DBAL: SELECT test_table'
+    tags:
+      -
+        key: db.statement
+        value: 'SELECT COUNT(*) FROM test_table t0'
+      -
+        key: db.parameters
+        value: '[]'

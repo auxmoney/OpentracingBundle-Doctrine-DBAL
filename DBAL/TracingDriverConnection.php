@@ -49,7 +49,6 @@ final class TracingDriverConnection implements DBALDriverConnection
         $parameters = array_slice($args, 1);
         $this->spanFactory->beforeOperation($args[0]);
         $result = $this->decoratedConnection->query(...$args);
-        usleep(15000); // FIXME
         $this->spanFactory->afterOperation($args[0], $parameters, $this->username, $result->rowCount());
         return new TracingStatement($result, $this->spanFactory, $args[0], $this->username);
     }
@@ -71,7 +70,6 @@ final class TracingDriverConnection implements DBALDriverConnection
     {
         $this->spanFactory->beforeOperation($statement);
         $result = $this->decoratedConnection->exec($statement);
-        usleep(5000); // FIXME
         $this->spanFactory->afterOperation($statement, [], $this->username, $result);
         return $result;
     }

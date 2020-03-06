@@ -1,0 +1,4 @@
+doctrine:
+    dbal:
+        url: '%env(resolve:DATABASE_URL)%'
+        wrapper_class: App\Wrapper\TestWrapper

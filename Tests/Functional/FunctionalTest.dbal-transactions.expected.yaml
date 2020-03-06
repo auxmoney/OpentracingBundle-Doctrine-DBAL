@@ -1,0 +1,126 @@
+operationName: 'test:doctrine:dbal-transactions'
+tags:
+  -
+    key: command.exit-code
+    value: 0
+children:
+  -
+    operationName: 'DBAL: TRANSACTION'
+    tags:
+      -
+        key: db.transaction.end
+        value: commit
+    children:
+      -
+        operationName: 'DBAL: SELECT test_table'
+        tags:
+          -
+            key: db.statement
+            value: 'SELECT COUNT(*) FROM test_table WHERE str IS NOT NULL'
+          -
+            key: db.parameters
+            value: '[]'
+      -
+        operationName: 'DBAL: INSERT INTO test_table'
+        tags:
+          -
+            key: db.statement
+            value: 'INSERT INTO test_table (str) VALUES (?)'
+          -
+            key: db.parameters
+            value: '["a"]'
+      -
+        operationName: 'DBAL: SELECT test_table'
+        tags:
+          -
+            key: db.statement
+            value: 'SELECT COUNT(*) FROM test_table WHERE str IS NOT NULL'
+          -
+            key: db.parameters
+            value: '[]'
+      -
+        operationName: 'DBAL: SELECT test_table'
+        tags:
+          -
+            key: db.statement
+            value: 'SELECT id FROM test_table WHERE str IS NOT NULL'
+          -
+            key: db.parameters
+            value: '[]'
+      -
+        operationName: 'DBAL: UPDATE test_table'
+        tags:
+          -
+            key: db.statement
+            value: 'UPDATE test_table SET str = ? WHERE id = ?'
+          -
+            key: db.parameters
+            value: '[null,"1"]'
+      -
+        operationName: 'DBAL: SELECT test_table'
+        tags:
+          -
+            key: db.statement
+            value: 'SELECT COUNT(*) FROM test_table WHERE str IS NOT NULL'
+          -
+            key: db.parameters
+            value: '[]'
+  -
+    operationName: 'DBAL: SELECT test_table'
+    tags:
+      -
+        key: db.statement
+        value: 'SELECT COUNT(*) FROM test_table WHERE str IS NOT NULL'
+      -
+        key: db.parameters
+        value: '[]'
+  -
+    operationName: 'DBAL: TRANSACTION'
+    tags:
+      -
+        key: db.transaction.end
+        value: rollBack
+    children:
+      -
+        operationName: 'DBAL: INSERT INTO test_table'
+        tags:
+          -
+            key: db.statement
+            value: 'INSERT INTO test_table (str) VALUES (?)'
+          -
+            key: db.parameters
+            value: '["a"]'
+      -
+        operationName: 'DBAL: SELECT test_table'
+        tags:
+          -
+            key: db.statement
+            value: 'SELECT COUNT(*) FROM test_table WHERE str IS NOT NULL'
+          -
+            key: db.parameters
+            value: '[]'
+  -
+    operationName: 'DBAL: TRANSACTION'
+    tags:
+      -
+        key: db.transaction.end
+        value: commit
+    children:
+      -
+        operationName: 'DBAL: SELECT test_table'
+        tags:
+          -
+            key: db.statement
+            value: 'SELECT COUNT(*) FROM test_table WHERE str IS NOT NULL'
+          -
+            key: db.parameters
+            value: '[]'
+  -
+    operationName: 'DBAL: UPDATE test_table'
+    tags:
+      -
+        key: db.statement
+        value: 'UPDATE test_table SET str = NULL WHERE str IS NOT NULL'
+      -
+        key: db.parameters
+        value: '[]'
