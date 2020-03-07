@@ -9,6 +9,7 @@ use Doctrine\Bundle\DoctrineBundle\ConnectionFactory as DoctrineConnectionFactor
 use Doctrine\Common\EventManager;
 use Doctrine\DBAL\Configuration;
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\DBALException;
 use Doctrine\DBAL\Types\Type;
 use ReflectionException;
 use ReflectionObject;
@@ -33,6 +34,7 @@ final class TracingConnectionFactory
      * @param array<string,mixed> $params
      * @param string[]|Type[] $mappingTypes
      * @throws ReflectionException
+     * @throws DBALException
      */
     public function createConnection(
         array $params,

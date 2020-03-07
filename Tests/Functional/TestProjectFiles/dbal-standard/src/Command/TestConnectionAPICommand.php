@@ -21,8 +21,6 @@ class TestConnectionAPICommand extends Command
     {
         parent::__construct('test:doctrine:dbal-connection-api');
 
-        // TODO: unit tests!
-
         $this->connection = $connection;
         $this->opentracing = $opentracing;
     }

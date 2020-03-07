@@ -12,7 +12,7 @@ use const OpenTracing\Tags\DATABASE_USER;
 use const OpenTracing\Tags\SPAN_KIND;
 use const OpenTracing\Tags\SPAN_KIND_RPC_CLIENT;
 
-class SQLSpanFactory implements SpanFactory
+final class SQLSpanFactory implements SpanFactory
 {
     private $statementFormatter;
     private $tracing;
