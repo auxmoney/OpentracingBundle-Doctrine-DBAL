@@ -159,4 +159,16 @@ final class TracingStatement implements IteratorAggregate, Statement
     {
         return $this->statement;
     }
+
+    /**
+     * Returns the wrapped statement.
+     *
+     * Keep in mind that operations made on this statement won't be traced!
+     *
+     * @return Statement<Statement>
+     */
+    public function getWrappedStatement(): Statement
+    {
+        return $this->statement;
+    }
 }

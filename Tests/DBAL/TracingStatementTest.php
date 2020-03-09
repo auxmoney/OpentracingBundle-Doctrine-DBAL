@@ -133,4 +133,9 @@ class TracingStatementTest extends TestCase
 
         self::assertSame(7, $this->subject->columnCount());
     }
+
+    public function testGetWrappedStatement(): void
+    {
+        self::assertSame($this->statement->reveal(), $this->subject->getWrappedStatement());
+    }
 }
