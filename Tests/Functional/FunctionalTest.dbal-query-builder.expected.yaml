@@ -21,7 +21,7 @@ children:
         value: 'INSERT INTO test_table (str) VALUES(?)'
       -
         key: db.parameters
-        value: '[]'
+        value: '{"1":"a"}'
   -
     operationName: 'DBAL: SELECT test_table'
     tags:
@@ -39,7 +39,7 @@ children:
         value: 'INSERT INTO test_table (str) VALUES(?)'
       -
         key: db.parameters
-        value: '[]'
+        value: '{"1":"b"}'
   -
     operationName: 'DBAL: SELECT test_table'
     tags:
@@ -57,7 +57,7 @@ children:
         value: 'SELECT id FROM test_table WHERE str = ?'
       -
         key: db.parameters
-        value: '[]'
+        value: '{"1":"a"}'
   -
     operationName: 'DBAL: UPDATE test_table'
     tags:
@@ -66,7 +66,7 @@ children:
         value: 'UPDATE test_table SET str = ? WHERE id = ?'
       -
         key: db.parameters
-        value: '[]'
+        value: '{"1":null,"2":"1"}'
   -
     operationName: 'DBAL: SELECT test_table'
     tags:
@@ -84,7 +84,7 @@ children:
         value: 'SELECT id FROM test_table WHERE str = ?'
       -
         key: db.parameters
-        value: '[]'
+        value: '{"1":"b"}'
   -
     operationName: 'DBAL: DELETE test_table'
     tags:
@@ -93,7 +93,7 @@ children:
         value: 'DELETE FROM test_table WHERE id = ?'
       -
         key: db.parameters
-        value: '[]'
+        value: '{"1":"2"}'
   -
     operationName: 'DBAL: SELECT test_table'
     tags:

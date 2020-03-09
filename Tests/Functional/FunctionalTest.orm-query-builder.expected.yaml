@@ -37,7 +37,7 @@ children:
             value: 'INSERT INTO test_table (str) VALUES (?)'
           -
             key: db.parameters
-            value: '[]'
+            value: '{"1":"a"}'
   -
     operationName: 'DBAL: SELECT test_table'
     tags:
@@ -71,7 +71,7 @@ children:
             value: 'INSERT INTO test_table (str) VALUES (?)'
           -
             key: db.parameters
-            value: '[]'
+            value: '{"1":"b"}'
   -
     operationName: 'DBAL: SELECT test_table'
     tags:
@@ -98,7 +98,7 @@ children:
         value: 'UPDATE test_table SET str = NULL WHERE str = ?'
       -
         key: db.parameters
-        value: '[]'
+        value: '{"1":"a"}'
   -
     operationName: 'DBAL: SELECT test_table'
     tags:
