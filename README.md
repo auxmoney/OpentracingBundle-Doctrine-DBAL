@@ -1,6 +1,5 @@
 # auxmoney OpentracingBundle - Doctrine DBAL
 
-![release](https://github.com/auxmoney/OpentracingBundle-core/workflows/release/badge.svg)
 ![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/auxmoney/OpentracingBundle-Doctrine-DBAL)
 ![Travis (.org)](https://img.shields.io/travis/auxmoney/OpentracingBundle-Doctrine-DBAL)
 ![Coveralls github](https://img.shields.io/coveralls/github/auxmoney/OpentracingBundle-Doctrine-DBAL)
@@ -25,7 +24,7 @@ After you have installed the OpentracingBundle:
 * require the dependencies:
 
 ```bash
-    composer req auxmoney/opentracing-bundle-doctrine-dbal:^0.1
+    composer req auxmoney/opentracing-bundle-doctrine-dbal
 ```
 
 ### Enable the bundle
