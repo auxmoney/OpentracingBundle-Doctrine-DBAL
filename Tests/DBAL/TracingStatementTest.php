@@ -82,6 +82,13 @@ class TracingStatementTest extends TestCase
         $this->statement->bindValue('param', 'param value', 3)->shouldBeCalled()->willReturn(true);
 
         self::assertTrue($this->subject->bindValue('param', 'param value', 3));
+
+        $this->statement->rowCount()->willReturn(5);
+        $this->spanFactory->beforeOperation('original sql')->shouldBeCalled();
+        $this->spanFactory->afterOperation('original sql', ['param' => 'param value'], $this->username, 5)->shouldBeCalled();
+
+        $this->statement->execute(null)->shouldBeCalled()->willReturn(true);
+        self::assertTrue($this->subject->execute());
     }
 
     public function testFetchColumn(): void

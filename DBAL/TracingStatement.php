@@ -20,6 +20,10 @@ final class TracingStatement implements IteratorAggregate, Statement
     private $sql;
     private $spanFactory;
     private $username;
+    /**
+     * @var array<mixed>
+     */
+    private $params = [];
 
     /**
      * @param Statement<Statement> $statement
@@ -95,6 +99,7 @@ final class TracingStatement implements IteratorAggregate, Statement
      */
     public function bindValue($param, $value, $type = null)
     {
+        $this->params[$param] = $value;
         return $this->statement->bindValue($param, $value, $type);
     }
 
@@ -130,7 +135,12 @@ final class TracingStatement implements IteratorAggregate, Statement
     {
         $this->spanFactory->beforeOperation($this->sql);
         $result = $this->statement->execute($params);
-        $this->spanFactory->afterOperation($this->sql, $params ?? [], $this->username, $this->statement->rowCount());
+        $this->spanFactory->afterOperation(
+            $this->sql,
+            $params ?? $this->params ?? [],
+            $this->username,
+            $this->statement->rowCount()
+        );
         return $result;
     }
 
