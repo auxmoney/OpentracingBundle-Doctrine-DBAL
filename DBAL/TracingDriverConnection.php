@@ -130,4 +130,16 @@ final class TracingDriverConnection implements DBALDriverConnection
     {
         return $this->decoratedConnection->errorInfo();
     }
+
+    /**
+     * Returns the wrapped connection.
+     *
+     * Keep in mind that operations made on this connection won't be traced!
+     *
+     * @return DBALDriverConnection
+     */
+    public function getWrappedConnection(): DBALDriverConnection
+    {
+        return $this->decoratedConnection;
+    }
 }

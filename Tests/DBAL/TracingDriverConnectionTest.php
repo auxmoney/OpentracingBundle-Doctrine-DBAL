@@ -120,4 +120,9 @@ class TracingDriverConnectionTest extends TestCase
 
         self::assertTrue($this->subject->rollBack());
     }
+
+    public function testGetWrappedConnection(): void
+    {
+        self::assertSame($this->decoratedConnection->reveal(), $this->subject->getWrappedConnection());
+    }
 }
