@@ -60,6 +60,15 @@ class TracingDriverConnectionTest extends TestCase
         self::assertTrue($this->subject->beginTransaction());
     }
 
+    public function testBeginTransactionWithFalse(): void
+    {
+        $this->tracing->startActiveSpan('DBAL: TRANSACTION')->shouldBeCalled();
+        $this->spanFactory->addGeneralTags($this->username)->shouldBeCalled();
+        $this->decoratedConnection->beginTransaction()->shouldBeCalled()->willReturn(false);
+
+        self::assertFalse($this->subject->beginTransaction());
+    }
+
     public function testQuote(): void
     {
         $this->decoratedConnection->quote('input', 4)->willReturn('"input"');
@@ -94,6 +103,15 @@ class TracingDriverConnectionTest extends TestCase
         self::assertTrue($this->subject->commit());
     }
 
+    public function testCommitWithFalseResult(): void
+    {
+        $this->decoratedConnection->commit()->shouldBeCalled()->willReturn(false);
+        $this->tracing->setTagOfActiveSpan('db.transaction.end', 'commit')->shouldBeCalled();
+        $this->tracing->finishActiveSpan()->shouldBeCalled();
+
+        self::assertFalse($this->subject->commit());
+    }
+
     public function testErrorCode(): void
     {
         $this->decoratedConnection->errorCode()->willReturn('error');
@@ -119,6 +137,15 @@ class TracingDriverConnectionTest extends TestCase
         $this->tracing->finishActiveSpan()->shouldBeCalled();
 
         self::assertTrue($this->subject->rollBack());
+    }
+
+    public function testRollBackWithFalse(): void
+    {
+        $this->decoratedConnection->rollBack()->shouldBeCalled()->willReturn(false);
+        $this->tracing->setTagOfActiveSpan('db.transaction.end', 'rollBack')->shouldBeCalled();
+        $this->tracing->finishActiveSpan()->shouldBeCalled();
+
+        self::assertFalse($this->subject->rollBack());
     }
 
     public function testGetWrappedConnection(): void

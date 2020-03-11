@@ -11,7 +11,7 @@ use Doctrine\DBAL\Driver\Statement as DoctrineStatement;
 /**
  * @SuppressWarnings(PHPMD.TooManyPublicMethods)
  */
-final class TracingDriverConnection implements DBALDriverConnection
+final class TracingDriverConnection implements DBALDriverConnection, WrappingDriverConnection
 {
     private $decoratedConnection;
     private $tracing;
@@ -89,8 +89,8 @@ final class TracingDriverConnection implements DBALDriverConnection
     {
         $this->tracing->startActiveSpan('DBAL: TRANSACTION');
         $this->spanFactory->addGeneralTags($this->username);
-        $this->decoratedConnection->beginTransaction();
-        return true;
+        $result = $this->decoratedConnection->beginTransaction();
+        return is_bool($result) === true ? $result : true;
     }
 
     /**
@@ -98,10 +98,10 @@ final class TracingDriverConnection implements DBALDriverConnection
      */
     public function commit()
     {
-        $this->decoratedConnection->commit();
+        $result = $this->decoratedConnection->commit();
         $this->tracing->setTagOfActiveSpan('db.transaction.end', 'commit');
         $this->tracing->finishActiveSpan();
-        return true;
+        return is_bool($result) === true ? $result : true;
     }
 
     /**
@@ -112,7 +112,7 @@ final class TracingDriverConnection implements DBALDriverConnection
         $result = $this->decoratedConnection->rollBack();
         $this->tracing->setTagOfActiveSpan('db.transaction.end', 'rollBack');
         $this->tracing->finishActiveSpan();
-        return $result;
+        return is_bool($result) === true ? $result : true;
     }
 
     /**
@@ -131,13 +131,6 @@ final class TracingDriverConnection implements DBALDriverConnection
         return $this->decoratedConnection->errorInfo();
     }
 
-    /**
-     * Returns the wrapped connection.
-     *
-     * Keep in mind that operations made on this connection won't be traced!
-     *
-     * @return DBALDriverConnection
-     */
     public function getWrappedConnection(): DBALDriverConnection
     {
         return $this->decoratedConnection;
