@@ -58,7 +58,7 @@ final class TracingDriverConnection implements DBALDriverConnection, WrappingDri
      * @param int $type
      * @return string
      */
-    public function quote($input, $type = 2) // we do not want a hard dependency on PDO
+    public function quote($input, $type = 2): string // we do not want a hard dependency on PDO
     {
         return $this->decoratedConnection->quote($input, $type);
     }
@@ -126,7 +126,7 @@ final class TracingDriverConnection implements DBALDriverConnection, WrappingDri
     /**
      * @return array<mixed>
      */
-    public function errorInfo()
+    public function errorInfo(): array
     {
         return $this->decoratedConnection->errorInfo();
     }

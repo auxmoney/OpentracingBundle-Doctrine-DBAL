@@ -81,7 +81,7 @@ final class TracingStatement implements IteratorAggregate, Statement, WrappingSt
      * @param array<mixed>|null $ctorArgs
      * @return array<mixed>
      */
-    public function fetchAll($fetchMode = null, $fetchArgument = null, $ctorArgs = null)
+    public function fetchAll($fetchMode = null, $fetchArgument = null, $ctorArgs = null): array
     {
         return $this->statement->fetchAll($fetchMode, $fetchArgument, $ctorArgs);
     }
@@ -122,7 +122,7 @@ final class TracingStatement implements IteratorAggregate, Statement, WrappingSt
     /**
      * @return array<mixed>
      */
-    public function errorInfo()
+    public function errorInfo(): array
     {
         return $this->statement->errorInfo();
     }
@@ -131,7 +131,7 @@ final class TracingStatement implements IteratorAggregate, Statement, WrappingSt
      * @param array<mixed>|null $params
      * @return bool
      */
-    public function execute($params = null)
+    public function execute($params = null): bool
     {
         $this->spanFactory->beforeOperation($this->sql);
         $result = $this->statement->execute($params);
