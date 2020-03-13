@@ -1,0 +1,33 @@
+parameters:
+  env(AUXMONEY_OPENTRACING_DOCTRINE_FULL_STATEMENT): 'true'
+  env(AUXMONEY_OPENTRACING_DOCTRINE_PARAMETERS): 'true'
+  env(AUXMONEY_OPENTRACING_DOCTRINE_ROW_COUNT): 'false'
+  env(AUXMONEY_OPENTRACING_DOCTRINE_USER): 'false'
+
+  auxmoney_opentracing.doctrine.tag_full_statement: '%env(AUXMONEY_OPENTRACING_DOCTRINE_FULL_STATEMENT)%'
+  auxmoney_opentracing.doctrine.tag_parameters: '%env(AUXMONEY_OPENTRACING_DOCTRINE_PARAMETERS)%'
+  auxmoney_opentracing.doctrine.tag_row_count: '%env(AUXMONEY_OPENTRACING_DOCTRINE_ROW_COUNT)%'
+  auxmoney_opentracing.doctrine.tag_user: '%env(AUXMONEY_OPENTRACING_DOCTRINE_USER)%'
+
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  auxmoney_opentracing.doctrine.dbal.connection_factory:
+    class: Auxmoney\OpentracingDoctrineDBALBundle\DBAL\TracingConnectionFactory
+    decorates: doctrine.dbal.connection_factory
+    arguments:
+      $connectionFactory: '@auxmoney_opentracing.doctrine.dbal.connection_factory.inner'
+
+  Auxmoney\OpentracingDoctrineDBALBundle\DBAL\SQLStatementFormatter:
+    class: Auxmoney\OpentracingDoctrineDBALBundle\DBAL\SQLStatementFormatterService
+
+  Auxmoney\OpentracingDoctrineDBALBundle\DBAL\SpanFactory:
+    class: Auxmoney\OpentracingDoctrineDBALBundle\DBAL\SQLSpanFactory
+    arguments:
+      $tagFullStatement: '%auxmoney_opentracing.doctrine.tag_full_statement%'
+      $tagParameters: '%auxmoney_opentracing.doctrine.tag_parameters%'
+      $tagRowCount: '%auxmoney_opentracing.doctrine.tag_row_count%'
+      $tagUser: '%auxmoney_opentracing.doctrine.tag_user%'

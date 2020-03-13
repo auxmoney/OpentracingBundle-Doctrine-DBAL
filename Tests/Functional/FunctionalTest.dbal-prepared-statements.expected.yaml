@@ -1,0 +1,96 @@
+operationName: 'test:doctrine:dbal-prepared-statements'
+tags:
+  -
+    key: command.exit-code
+    value: 0
+children:
+  -
+    operationName: 'DBAL: SELECT test_table'
+    tags:
+      -
+        key: db.statement
+        value: 'SELECT COUNT(*) FROM test_table WHERE str IS NOT NULL'
+      -
+        key: db.parameters
+        value: '[]'
+  -
+    operationName: 'DBAL: INSERT INTO test_table'
+    tags:
+      -
+        key: db.statement
+        value: 'INSERT INTO test_table VALUES (null, :str)'
+      -
+        key: db.parameters
+        value: '{"str":"a"}'
+  -
+    operationName: 'DBAL: SELECT test_table'
+    tags:
+      -
+        key: db.statement
+        value: 'SELECT COUNT(*) FROM test_table WHERE str IS NOT NULL'
+      -
+        key: db.parameters
+        value: '[]'
+  -
+    operationName: 'DBAL: INSERT INTO test_table'
+    tags:
+      -
+        key: db.statement
+        value: 'INSERT INTO test_table VALUES (null, :str)'
+      -
+        key: db.parameters
+        value: '{"str":"b"}'
+  -
+    operationName: 'DBAL: SELECT test_table'
+    tags:
+      -
+        key: db.statement
+        value: 'SELECT COUNT(*) FROM test_table WHERE str IS NOT NULL'
+      -
+        key: db.parameters
+        value: '[]'
+  -
+    operationName: 'DBAL: UPDATE test_table'
+    tags:
+      -
+        key: db.statement
+        value: 'UPDATE test_table SET str = ? WHERE str = ?'
+      -
+        key: db.parameters
+        value: '{"1":null,"2":"a"}'
+  -
+    operationName: 'DBAL: SELECT test_table'
+    tags:
+      -
+        key: db.statement
+        value: 'SELECT COUNT(*) FROM test_table WHERE str IS NOT NULL'
+      -
+        key: db.parameters
+        value: '[]'
+  -
+    operationName: 'DBAL: DELETE test_table'
+    tags:
+      -
+        key: db.statement
+        value: 'DELETE FROM test_table WHERE str IS NOT NULL'
+      -
+        key: db.parameters
+        value: '[]'
+  -
+    operationName: 'DBAL: SELECT test_table'
+    tags:
+      -
+        key: db.statement
+        value: 'SELECT COUNT(*) FROM test_table WHERE str IS NOT NULL'
+      -
+        key: db.parameters
+        value: '[]'
+  -
+    operationName: 'DBAL: UPDATE test_table'
+    tags:
+      -
+        key: db.statement
+        value: 'UPDATE test_table SET str = NULL WHERE str IS NOT NULL'
+      -
+        key: db.parameters
+        value: '[]'

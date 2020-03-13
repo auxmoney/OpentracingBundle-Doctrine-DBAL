@@ -1,0 +1,16 @@
+parameters:
+  paths:
+    - .
+
+  excludes_analyse:
+    - Tests/*
+    - vendor/*
+
+  level: 7
+  inferPrivatePropertyTypeFromConstructor: true
+
+  ignoreErrors:
+    # necessary, because Doctrine\DBAL\Connection does not comply to Doctrine\DBAL\Driver\Connection, and PHP allows this;
+    # target methods: beginTransaction(), commit(), rollBack()
+    - message: '/Else branch is unreachable because ternary operator condition is always true./'
+      path: '%currentWorkingDirectory%/DBAL/TracingDriverConnection.php'
