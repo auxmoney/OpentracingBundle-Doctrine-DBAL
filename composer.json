@@ -17,7 +17,7 @@
   "require": {
     "php": "^7.1.33",
     "ext-json": "*",
-    "auxmoney/opentracing-bundle-core": "^0.4",
+    "auxmoney/opentracing-bundle-core": "^0.5",
     "opentracing/opentracing": "1.0.0-beta5@beta",
     "doctrine/doctrine-bundle": "^1.11|^2.0",
     "doctrine/dbal": "^2.6"

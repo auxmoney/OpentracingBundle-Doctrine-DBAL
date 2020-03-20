@@ -10,15 +10,13 @@ use Doctrine\Common\EventManager;
 use Doctrine\DBAL\Configuration;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DBALException;
+use Doctrine\DBAL\Events;
 use Doctrine\DBAL\Types\Type;
-use ReflectionException;
-use ReflectionObject;
 
 final class TracingConnectionFactory
 {
     private $connectionFactory;
-    private $tracing;
-    private $spanFactory;
+    private $eventListener;
 
     public function __construct(
         DoctrineConnectionFactory $connectionFactory,
@@ -26,14 +24,15 @@ final class TracingConnectionFactory
         SpanFactory $spanFactory
     ) {
         $this->connectionFactory = $connectionFactory;
-        $this->tracing = $tracing;
-        $this->spanFactory = $spanFactory;
+        $this->eventListener = new TracingEventListener(
+            $tracing,
+            $spanFactory
+        );
     }
 
     /**
      * @param array<string,mixed> $params
      * @param string[]|Type[] $mappingTypes
-     * @throws ReflectionException
      * @throws DBALException
      */
     public function createConnection(
@@ -43,17 +42,7 @@ final class TracingConnectionFactory
         array $mappingTypes = []
     ): Connection {
         $connection = $this->connectionFactory->createConnection($params, $config, $eventManager, $mappingTypes);
-        $driverConnection = new TracingDriverConnection(
-            $connection->getWrappedConnection(),
-            $this->tracing,
-            $this->spanFactory,
-            $connection->getUsername()
-        );
-        $reflectionObject = new ReflectionObject($connection);
-        $property = $reflectionObject->getProperty('_conn');
-        $property->setAccessible(true);
-        $property->setValue($connection, $driverConnection);
-        $property->setAccessible(false);
+        $connection->getEventManager()->addEventListener(Events::postConnect, $this->eventListener);
         return $connection;
     }
 }
