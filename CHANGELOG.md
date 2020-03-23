@@ -1,3 +1,10 @@
+## [0.2.1](https://github.com/auxmoney/OpentracingBundle-Doctrine-DBAL/compare/v0.2.0...v0.2.1) (2020-03-23)
+
+
+### Bug Fixes
+
+* don't initiate connection in factory ([#9](https://github.com/auxmoney/OpentracingBundle-Doctrine-DBAL/issues/9)) ([a061bd5](https://github.com/auxmoney/OpentracingBundle-Doctrine-DBAL/commit/a061bd58845c3abd02828cc171f540f4919e60b4))
+
 # [0.2.0](https://github.com/auxmoney/OpentracingBundle-Doctrine-DBAL/compare/v0.1.0...v0.2.0) (2020-03-20)
 
 
