@@ -10,7 +10,6 @@ use Auxmoney\OpentracingDoctrineDBALBundle\DBAL\TracingConnectionFactory;
 use Auxmoney\OpentracingDoctrineDBALBundle\DBAL\TracingDriverConnection;
 use Doctrine\Bundle\DoctrineBundle\ConnectionFactory as DoctrineConnectionFactory;
 use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\Driver\Connection as DriverConnection;
 use Doctrine\DBAL\Driver\PDOSqlite\Driver;
 use PHPUnit\Framework\TestCase;
 
