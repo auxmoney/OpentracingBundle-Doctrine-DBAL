@@ -29,17 +29,27 @@ final class TracingEventListener
     public function postConnect(ConnectionEventArgs $args): void
     {
         $connection = $args->getConnection();
+        $username = $connection->getUsername();
+
+        $wrappedConnection = new TracingDriverConnection(
+            $connection->getWrappedConnection(),
+            $this->tracing,
+            $this->spanFactory,
+            $username
+        );
+
         $reflectionObject = new ReflectionObject($connection);
         $property = $reflectionObject->getProperty('_conn');
         $property->setAccessible(true);
-        $previousConnection = $property->getValue($connection);
-        $driverConnection = new TracingDriverConnection(
-            $previousConnection,
-            $this->tracing,
-            $this->spanFactory,
-            $connection->getUsername()
-        );
-        $property->setValue($connection, $driverConnection);
+        $property->setValue($connection, $wrappedConnection);
         $property->setAccessible(false);
+
+        // Account for already started transactions (used by autocommit)
+        $inFlight = $connection->getTransactionNestingLevel();
+
+        for ($i = 0; $i < $inFlight; $i++) {
+            $this->tracing->startActiveSpan('DBAL: TRANSACTION');
+            $this->spanFactory->addGeneralTags($username);
+        }
     }
 }
