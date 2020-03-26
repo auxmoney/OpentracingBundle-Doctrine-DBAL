@@ -1,3 +1,10 @@
+## [0.2.2](https://github.com/auxmoney/OpentracingBundle-Doctrine-DBAL/compare/v0.2.1...v0.2.2) (2020-03-26)
+
+
+### Bug Fixes
+
+* account for in flight transactions ([#11](https://github.com/auxmoney/OpentracingBundle-Doctrine-DBAL/issues/11)) ([bff4d51](https://github.com/auxmoney/OpentracingBundle-Doctrine-DBAL/commit/bff4d51796211636aa305b71670d730f29560052))
+
 ## [0.2.1](https://github.com/auxmoney/OpentracingBundle-Doctrine-DBAL/compare/v0.2.0...v0.2.1) (2020-03-23)
 
 
