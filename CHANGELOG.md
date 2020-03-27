@@ -1,3 +1,10 @@
+## [0.2.3](https://github.com/auxmoney/OpentracingBundle-Doctrine-DBAL/compare/v0.2.2...v0.2.3) (2020-03-27)
+
+
+### Bug Fixes
+
+* upgrade core dependency ([#13](https://github.com/auxmoney/OpentracingBundle-Doctrine-DBAL/issues/13)) ([11d1e9a](https://github.com/auxmoney/OpentracingBundle-Doctrine-DBAL/commit/11d1e9ac8d0ea268092961a67f2d9c3ae5da5eda))
+
 ## [0.2.2](https://github.com/auxmoney/OpentracingBundle-Doctrine-DBAL/compare/v0.2.1...v0.2.2) (2020-03-26)
 
 
