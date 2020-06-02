@@ -97,7 +97,7 @@ final class TracingStatement implements IteratorAggregate, Statement, WrappingSt
     /**
      * @inheritDoc
      */
-    public function bindValue($param, $value, $type = null)
+    public function bindValue($param, $value, $type = 2 /* Doctrine\DBAL\ParameterType::STRING */)
     {
         $this->params[$param] = $value;
         return $this->statement->bindValue($param, $value, $type);
@@ -106,7 +106,7 @@ final class TracingStatement implements IteratorAggregate, Statement, WrappingSt
     /**
      * @inheritDoc
      */
-    public function bindParam($column, &$variable, $type = null, $length = null)
+    public function bindParam($column, &$variable, $type = 2 /* Doctrine\DBAL\ParameterType::STRING */, $length = null)
     {
         return $this->statement->bindParam($column, $variable, $type, $length);
     }

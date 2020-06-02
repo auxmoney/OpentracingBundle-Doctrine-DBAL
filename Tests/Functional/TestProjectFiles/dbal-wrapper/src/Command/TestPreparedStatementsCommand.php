@@ -44,6 +44,9 @@ class TestPreparedStatementsCommand extends Command
         $selectCount->execute();
         Assert::eq($selectCount->fetchColumn(), 2);
 
+        $result = $this->connection->executeQuery('SELECT str FROM test_table WHERE str = ?', ['a']);
+        Assert::eq($result->fetchColumn(), 'a');
+
         Assert::eq($this->connection->executeUpdate('UPDATE test_table SET str = :new WHERE str = :original', ['new' => null, 'original' => 'a']), 1);
         $selectCount->execute();
         Assert::eq($selectCount->fetchColumn(), 1);
@@ -54,7 +57,7 @@ class TestPreparedStatementsCommand extends Command
 
         Assert::eq($this->connection->exec('UPDATE test_table SET str = NULL WHERE str IS NOT NULL'), 0);
         Assert::eq($this->connection->getInsertCount(), 0);
-        Assert::eq($this->connection->getExecuteQueryCount(), 1);
+        Assert::eq($this->connection->getExecuteQueryCount(), 2);
 
         $carrier = [];
         $this->opentracing->getTracerInstance()->inject($this->opentracing->getTracerInstance()->getActiveSpan()->getContext(), TEXT_MAP, $carrier);

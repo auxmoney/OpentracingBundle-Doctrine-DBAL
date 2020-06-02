@@ -50,6 +50,15 @@ children:
         key: db.parameters
         value: '[]'
   -
+    operationName: 'DBAL: SELECT test_table'
+    tags:
+      -
+        key: db.statement
+        value: 'SELECT str FROM test_table WHERE str = ?'
+      -
+        key: db.parameters
+        value: '{"1":"a"}'
+  -
     operationName: 'DBAL: UPDATE test_table'
     tags:
       -

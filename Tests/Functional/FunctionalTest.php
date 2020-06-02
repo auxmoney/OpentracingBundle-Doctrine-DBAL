@@ -26,7 +26,7 @@ class FunctionalTest extends JaegerFunctionalTest
     {
         $this->setupTestProjectDbal($project, $withORM);
 
-        $this->assertSpans('dbal-prepared-statements', 11);
+        $this->assertSpans('dbal-prepared-statements', 12);
     }
 
     /**
