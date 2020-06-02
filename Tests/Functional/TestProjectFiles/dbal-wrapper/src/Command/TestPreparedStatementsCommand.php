@@ -57,7 +57,7 @@ class TestPreparedStatementsCommand extends Command
 
         Assert::eq($this->connection->exec('UPDATE test_table SET str = NULL WHERE str IS NOT NULL'), 0);
         Assert::eq($this->connection->getInsertCount(), 0);
-        Assert::eq($this->connection->getExecuteQueryCount(), 1);
+        Assert::eq($this->connection->getExecuteQueryCount(), 2);
 
         $carrier = [];
         $this->opentracing->getTracerInstance()->inject($this->opentracing->getTracerInstance()->getActiveSpan()->getContext(), TEXT_MAP, $carrier);
