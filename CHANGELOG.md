@@ -1,3 +1,10 @@
+## [0.2.4](https://github.com/auxmoney/OpentracingBundle-Doctrine-DBAL/compare/v0.2.3...v0.2.4) (2020-06-02)
+
+
+### Bug Fixes
+
+* broken interfaces from 2.6 ([#16](https://github.com/auxmoney/OpentracingBundle-Doctrine-DBAL/issues/16)) ([901968b](https://github.com/auxmoney/OpentracingBundle-Doctrine-DBAL/commit/901968ba52859de10fd8c3042652b5ec21ea90b3))
+
 ## [0.2.3](https://github.com/auxmoney/OpentracingBundle-Doctrine-DBAL/compare/v0.2.2...v0.2.3) (2020-03-27)
 
 
