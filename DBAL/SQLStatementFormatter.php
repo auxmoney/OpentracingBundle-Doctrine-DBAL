@@ -7,4 +7,6 @@ namespace Auxmoney\OpentracingDoctrineDBALBundle\DBAL;
 interface SQLStatementFormatter
 {
     public function formatForTracer(string $string): string;
+
+    public function extractOperation(string $string): string;
 }

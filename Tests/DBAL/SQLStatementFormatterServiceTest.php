@@ -37,4 +37,23 @@ class SQLStatementFormatterServiceTest extends TestCase
             'fallback' => ['DBAL: ALTER TABLE table_name DROP COLU', 'ALTER TABLE table_name DROP COLUMN str, DROP COLUMN int, DROP COLUMN dec, DROP COLUMN foo, DROP COLUMN bar, DROP COLUMN more'],
         ];
     }
+
+    /**
+     * @dataProvider provideExtractStrings
+     */
+    public function testExtractOperation(string $expected, string $inputString): void
+    {
+        self::assertSame($expected, $this->subject->extractOperation($inputString));
+    }
+
+    public function provideExtractStrings(): array
+    {
+        return [
+            'SELECT' => ['select', 'SELECT id, foo as bar FROM table_name WHERE id > 1 AND foo IS NOT NULL'],
+            'DELETE' => ['delete', 'DELETE FROM table_name WHERE id > 1 AND foo IS NOT NULL'],
+            'INSERT' => ['insert', 'INSERT INTO table_name VALUES (null, "string")'],
+            'UPDATE' => ['update', 'UPDATE table_name SET foo = "another string" WHERE id = 6'],
+            'fallback' => ['alter', 'ALTER TABLE table_name DROP COLUMN str, DROP COLUMN int, DROP COLUMN dec, DROP COLUMN foo, DROP COLUMN bar, DROP COLUMN more'],
+        ];
+    }
 }
