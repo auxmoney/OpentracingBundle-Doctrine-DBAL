@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Auxmoney\OpentracingDoctrineDBALBundle\DBAL;
 
+use Auxmoney\OpentracingBundle\Internal\Constant;
 use Auxmoney\OpentracingBundle\Service\Tracing;
 use Auxmoney\OpentracingDoctrineDBALBundle\OpentracingDoctrineDBALBundle;
 use const OpenTracing\Tags\DATABASE_STATEMENT;
@@ -45,6 +46,7 @@ final class SQLSpanFactory implements SpanFactory
     public function afterOperation(string $sql, array $parameters, ?string $username, int $affectedRowCount): void
     {
         $this->addGeneralTags($username);
+        $this->tracing->setTagOfActiveSpan(Constant::SPAN_ORIGIN, $this->statementFormatter->buildSpanOrigin($sql));
         if ($this->tagFullStatement) {
             $this->tracing->setTagOfActiveSpan(DATABASE_STATEMENT, $sql);
         }

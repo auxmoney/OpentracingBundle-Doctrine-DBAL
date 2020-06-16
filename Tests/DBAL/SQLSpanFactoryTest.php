@@ -86,7 +86,10 @@ class SQLSpanFactoryTest extends TestCase
         $this->tracing->setTagOfActiveSpan('db.statement', 'a SQL statement')->shouldBeCalled();
         $this->tracing->setTagOfActiveSpan('db.parameters', '{"param":"param value"}')->shouldBeCalled();
         $this->tracing->setTagOfActiveSpan('db.row_count', 5)->shouldBeCalled();
+        $this->tracing->setTagOfActiveSpan('auxmoney-opentracing-bundle.span-origin', 'a')->shouldBeCalled();
         $this->tracing->finishActiveSpan()->shouldBeCalled();
+
+        $this->statementFormatter->buildSpanOrigin('a SQL statement')->willReturn('a');
 
         $this->subject->afterOperation('a SQL statement', ['param' => 'param value'], 'username', 5);
     }
@@ -105,7 +108,10 @@ class SQLSpanFactoryTest extends TestCase
         $this->tracing->setTagOfActiveSpan('span.kind', 'client')->shouldBeCalled();
         $this->tracing->setTagOfActiveSpan('span.source', 'DBAL')->shouldBeCalled();
         $this->tracing->setTagOfActiveSpan('db.type', 'sql')->shouldBeCalled();
+        $this->tracing->setTagOfActiveSpan('auxmoney-opentracing-bundle.span-origin', 'a')->shouldBeCalled();
         $this->tracing->finishActiveSpan()->shouldBeCalled();
+
+        $this->statementFormatter->buildSpanOrigin('a SQL statement')->willReturn('a');
 
         $this->subject->afterOperation('a SQL statement', ['param' => 'param value'], 'username', 5);
     }
