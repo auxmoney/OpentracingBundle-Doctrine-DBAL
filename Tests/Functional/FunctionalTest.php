@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Auxmoney\OpentracingDoctrineDBALBundle\Tests\Functional;
 
-use Auxmoney\OpentracingBundle\Tests\Functional\JaegerFunctionalTest;
+use Auxmoney\OpentracingBundle\Tests\Functional\JaegerConsoleFunctionalTest;
 use Symfony\Component\Process\Process;
 
-class FunctionalTest extends JaegerFunctionalTest
+class FunctionalTest extends JaegerConsoleFunctionalTest
 {
     /**
      * @dataProvider provideDBALProjects
@@ -83,7 +83,7 @@ class FunctionalTest extends JaegerFunctionalTest
         $spans = $this->getSpansFromTrace($this->getTraceFromJaegerAPI($traceId));
         self::assertCount($spanCount, $spans);
 
-        $traceAsYAML = $this->getSpansAsYAML($spans, '[].{operationName: operationName, startTime: startTime, spanID: spanID, references: references, tags: tags[?key==\'db.statement\' || key==\'db.parameters\' || key==\'db.row_count\' || key==\'db.user\' || key==\'db.transaction.end\' || key==\'command.exit-code\'].{key: key, value: value}}');
+        $traceAsYAML = $this->getSpansAsYAML($spans, '[].{operationName: operationName, startTime: startTime, spanID: spanID, references: references, tags: tags[?key==\'db.statement\' || key==\'db.parameters\' || key==\'db.row_count\' || key==\'db.user\' || key==\'db.transaction.end\' || key==\'command.exit-code\' || key==\'auxmoney-opentracing-bundle.span-origin\'].{key: key, value: value}}');
         self::assertStringEqualsFile(__DIR__ . '/FunctionalTest.' . $command . '.expected.yaml', $traceAsYAML);
     }
 
