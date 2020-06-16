@@ -15,11 +15,11 @@ final class SQLStatementFormatterService implements SQLStatementFormatter
         return OpentracingDoctrineDBALBundle::AUXMONEY_OPENTRACING_BUNDLE_TYPE . ': ' . $formattedStatement;
     }
 
-    public function extractOperation(string $string): string
+    public function buildSpanOrigin(string $string): string
     {
         $condensedStatement = $this->condenseStatement($string) ?? $string;
         $spacePosition = strpos($condensedStatement, ' ') ?: 6;
-        return strtolower(trim(substr($condensedStatement, 0, $spacePosition)));
+        return 'DBAL:' . strtolower(trim(substr($condensedStatement, 0, $spacePosition)));
     }
 
     private function condenseStatement(string $string): ?string

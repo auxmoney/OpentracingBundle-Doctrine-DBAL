@@ -8,5 +8,5 @@ interface SQLStatementFormatter
 {
     public function formatForTracer(string $string): string;
 
-    public function extractOperation(string $string): string;
+    public function buildSpanOrigin(string $string): string;
 }
