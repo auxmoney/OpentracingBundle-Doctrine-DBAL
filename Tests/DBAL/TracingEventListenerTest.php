@@ -11,6 +11,7 @@ use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Driver\Connection as DBALDriverConnection;
 use Doctrine\DBAL\Event\ConnectionEventArgs;
 use PHPUnit\Framework\TestCase;
+use Prophecy\Argument;
 
 class TracingEventListenerTest extends TestCase
 {
@@ -47,7 +48,8 @@ class TracingEventListenerTest extends TestCase
         $connection->getTransactionNestingLevel()->shouldBeCalled();
         $this->tracing->startActiveSpan('DBAL: TRANSACTION')->shouldBeCalled();
         $this->spanFactory->addGeneralTags('username')->shouldBeCalled();
-        
+        $this->tracing->setTagOfActiveSpan('auxmoney-opentracing-bundle.span-origin', 'DBAL:transaction')->shouldBeCalled();
+
         $this->subject->postConnect($connectionEventArgs->reveal());
     }
 
@@ -66,8 +68,9 @@ class TracingEventListenerTest extends TestCase
         $connection->getUsername()->shouldBeCalled();
         $connection->getTransactionNestingLevel()->shouldBeCalled();
         $this->tracing->startActiveSpan()->shouldNotBeCalled();
+        $this->tracing->setTagOfActiveSpan(Argument::any())->shouldNotBeCalled();
         $this->spanFactory->addGeneralTags()->shouldNotBeCalled();
-        
+
         $this->subject->postConnect($connectionEventArgs->reveal());
     }
 }

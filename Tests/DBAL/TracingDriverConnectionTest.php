@@ -54,6 +54,7 @@ class TracingDriverConnectionTest extends TestCase
     public function testBeginTransaction(): void
     {
         $this->tracing->startActiveSpan('DBAL: TRANSACTION')->shouldBeCalled();
+        $this->tracing->setTagOfActiveSpan('auxmoney-opentracing-bundle.span-origin', 'DBAL:transaction')->shouldBeCalled();
         $this->spanFactory->addGeneralTags($this->username)->shouldBeCalled();
         $this->decoratedConnection->beginTransaction()->shouldBeCalled();
 
@@ -63,6 +64,7 @@ class TracingDriverConnectionTest extends TestCase
     public function testBeginTransactionWithFalse(): void
     {
         $this->tracing->startActiveSpan('DBAL: TRANSACTION')->shouldBeCalled();
+        $this->tracing->setTagOfActiveSpan('auxmoney-opentracing-bundle.span-origin', 'DBAL:transaction')->shouldBeCalled();
         $this->spanFactory->addGeneralTags($this->username)->shouldBeCalled();
         $this->decoratedConnection->beginTransaction()->shouldBeCalled()->willReturn(false);
 
