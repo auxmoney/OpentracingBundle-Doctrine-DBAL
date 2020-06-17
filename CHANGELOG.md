@@ -1,3 +1,10 @@
+## [0.3.1](https://github.com/auxmoney/OpentracingBundle-Doctrine-DBAL/compare/v0.3.0...v0.3.1) (2020-06-17)
+
+
+### Bug Fixes
+
+* add span origin tag ([#17](https://github.com/auxmoney/OpentracingBundle-Doctrine-DBAL/issues/17)) ([1789920](https://github.com/auxmoney/OpentracingBundle-Doctrine-DBAL/commit/178992008373f5bfe13605bd21d0d48e392f322a))
+
 # [0.3.0](https://github.com/auxmoney/OpentracingBundle-Doctrine-DBAL/compare/v0.2.4...v0.3.0) (2020-06-16)
 
 
