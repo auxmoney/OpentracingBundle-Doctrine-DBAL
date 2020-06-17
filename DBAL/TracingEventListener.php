@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Auxmoney\OpentracingDoctrineDBALBundle\DBAL;
 
+use Auxmoney\OpentracingBundle\Internal\Constant;
 use Auxmoney\OpentracingBundle\Service\Tracing;
 use Doctrine\DBAL\Event\ConnectionEventArgs;
 use ReflectionException;
@@ -50,6 +51,7 @@ final class TracingEventListener
         for ($i = 0; $i < $inFlight; $i++) {
             $this->tracing->startActiveSpan('DBAL: TRANSACTION');
             $this->spanFactory->addGeneralTags($username);
+            $this->tracing->setTagOfActiveSpan(Constant::SPAN_ORIGIN, 'DBAL:transaction');
         }
     }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Auxmoney\OpentracingDoctrineDBALBundle\DBAL;
 
+use Auxmoney\OpentracingBundle\Internal\Constant;
 use Auxmoney\OpentracingBundle\Service\Tracing;
 use Doctrine\DBAL\Driver\Connection as DBALDriverConnection;
 use Doctrine\DBAL\Driver\Statement as DoctrineStatement;
@@ -89,6 +90,7 @@ final class TracingDriverConnection implements DBALDriverConnection, WrappingDri
     {
         $this->tracing->startActiveSpan('DBAL: TRANSACTION');
         $this->spanFactory->addGeneralTags($this->username);
+        $this->tracing->setTagOfActiveSpan(Constant::SPAN_ORIGIN, 'DBAL:transaction');
         $result = $this->decoratedConnection->beginTransaction();
         return is_bool($result) === true ? $result : true;
     }
