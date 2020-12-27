@@ -1,8 +1,10 @@
 #!/bin/bash
+shopt -s extglob
 
 cd build/testproject/
-composer config repositories.origin vcs https://github.com/${PR_ORIGIN}
-composer config use-github-api false
-composer require auxmoney/opentracing-bundle-doctrine-dbal:dev-${BRANCH} webmozart/assert --no-scripts
+composer require auxmoney/opentracing-bundle-doctrine-dbal webmozart/assert --no-scripts
 composer fix-recipes
+rm -fr vendor/auxmoney/opentracing-bundle-doctrine-dbal/*
+cp -r ../../!(build|vendor) vendor/auxmoney/opentracing-bundle-doctrine-dbal
+composer dump-autoload
 cd ../../
