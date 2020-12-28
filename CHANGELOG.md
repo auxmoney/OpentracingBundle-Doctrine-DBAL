@@ -1,3 +1,10 @@
+## [0.3.2](https://github.com/auxmoney/OpentracingBundle-Doctrine-DBAL/compare/v0.3.1...v0.3.2) (2020-12-28)
+
+
+### Bug Fixes
+
+* replace Travis with GitHub ([#18](https://github.com/auxmoney/OpentracingBundle-Doctrine-DBAL/issues/18)) ([d14b4cc](https://github.com/auxmoney/OpentracingBundle-Doctrine-DBAL/commit/d14b4ccf55cfb1d8bc284e26138d1a7cdea75022))
+
 ## [0.3.1](https://github.com/auxmoney/OpentracingBundle-Doctrine-DBAL/compare/v0.3.0...v0.3.1) (2020-06-17)
 
 
