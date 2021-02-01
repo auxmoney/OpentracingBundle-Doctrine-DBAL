@@ -67,7 +67,7 @@ class TestQueryBuilderCommand extends Command
             ->where('id = :id')
             ->setParameter('id', $id);
         Assert::eq($deleteBuilder->execute(), 1);
-        Assert::eq($selectBuilder->execute()->fetchColumn(), 0);
+        Assert::eq($selectBuilder->execute()->fetchOne(), 0);
 
         Assert::eq($this->connection->exec('UPDATE test_table SET str = NULL WHERE str IS NOT NULL'), 0);
         Assert::eq($this->connection->getInsertCount(), 0);

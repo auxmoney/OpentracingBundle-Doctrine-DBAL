@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Auxmoney\OpentracingDoctrineDBALBundle\Tests\DBAL;
 
 use Auxmoney\OpentracingDoctrineDBALBundle\DBAL\SpanFactory;
+use Auxmoney\OpentracingDoctrineDBALBundle\DBAL\StatementCombinedResult;
 use Auxmoney\OpentracingDoctrineDBALBundle\DBAL\TracingStatement;
-use Doctrine\DBAL\Driver\Statement;
 use PHPUnit\Framework\TestCase;
 
 class TracingStatementTest extends TestCase
@@ -21,7 +21,7 @@ class TracingStatementTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $this->statement = $this->prophesize(Statement::class);
+        $this->statement = $this->prophesize(StatementCombinedResult::class);
         $this->spanFactory = $this->prophesize(SpanFactory::class);
         $this->sql = 'original sql';
         $this->username = 'dbuser';
@@ -85,7 +85,12 @@ class TracingStatementTest extends TestCase
 
         $this->statement->rowCount()->willReturn(5);
         $this->spanFactory->beforeOperation('original sql')->shouldBeCalled();
-        $this->spanFactory->afterOperation('original sql', ['param' => 'param value'], $this->username, 5)->shouldBeCalled();
+        $this->spanFactory->afterOperation(
+            'original sql',
+            ['param' => 'param value'],
+            $this->username,
+            5
+        )->shouldBeCalled();
 
         $this->statement->execute(null)->shouldBeCalled()->willReturn(true);
         self::assertTrue($this->subject->execute());
@@ -137,5 +142,53 @@ class TracingStatementTest extends TestCase
     public function testGetWrappedStatement(): void
     {
         self::assertSame($this->statement->reveal(), $this->subject->getWrappedStatement());
+    }
+
+    public function testFetchAllAssociative(): void
+    {
+        $this->statement->fetchAllAssociative()->shouldBeCalled()->willReturn(['result']);
+
+        self::assertSame(['result'], $this->subject->fetchAllAssociative());
+    }
+
+    public function testFetchNumeric(): void
+    {
+        $this->statement->fetchNumeric()->shouldBeCalled()->willReturn([0 => 'buzz', 1 => 'fee']);
+
+        self::assertSame([0 => 'buzz', 1 => 'fee'], $this->subject->fetchNumeric());
+    }
+
+    public function testFetchAssociative(): void
+    {
+        $this->statement->fetchAssociative()->shouldBeCalled()->willReturn(['fee' => 'buzz']);
+
+        self::assertSame(['fee' => 'buzz'], $this->subject->fetchAssociative());
+    }
+
+    public function testFetchOne(): void
+    {
+        $this->statement->fetchOne()->shouldBeCalled()->willReturn('fee');
+
+        self::assertSame('fee', $this->subject->fetchOne());
+    }
+
+    public function testFetchAllNumeric(): void
+    {
+        $this->statement->fetchAllNumeric()->shouldBeCalled()->willReturn([1]);
+
+        self::assertSame([1], $this->subject->fetchAllNumeric());
+    }
+
+    public function testFetchFirstColumn(): void
+    {
+        $this->statement->fetchFirstColumn()->shouldBeCalled()->willReturn([1]);
+
+        self::assertSame([1], $this->subject->fetchFirstColumn());
+    }
+
+    public function testFree(): void
+    {
+        $this->statement->free()->shouldBeCalled();
+        $this->subject->free();
     }
 }

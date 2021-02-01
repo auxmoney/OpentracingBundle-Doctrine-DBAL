@@ -32,12 +32,15 @@ class TestConnectionAPICommand extends Command
 
         Assert::eq($this->connection->insert('test_table', ['str' => 'a'], [ParameterType::STRING]), 1);
         Assert::eq($this->connection->fetchAll('SELECT COUNT(*) FROM test_table WHERE str IS NOT NULL')[0]['COUNT(*)'], 1);
+        Assert::eq($this->connection->fetchAllAssociative('SELECT COUNT(*) FROM test_table WHERE str IS NOT NULL')[0]['COUNT(*)'], 1);
 
         Assert::eq($this->connection->insert('test_table', ['str' => 'b'], [ParameterType::STRING]), 1);
         Assert::eq($this->connection->fetchColumn('SELECT COUNT(*) FROM test_table WHERE str IS NOT NULL'), 2);
+        Assert::eq($this->connection->fetchOne('SELECT COUNT(*) FROM test_table WHERE str IS NOT NULL'), 2);
 
         Assert::eq($this->connection->update('test_table', ['str' => null], ['str' => 'a'], [ParameterType::STRING, ParameterType::STRING]), 1);
         Assert::eq($this->connection->fetchArray('SELECT COUNT(*) FROM test_table WHERE str IS NOT NULL')[0][0], 1);
+        Assert::eq($this->connection->fetchAllNumeric('SELECT COUNT(*) FROM test_table WHERE str IS NOT NULL')[0][0], 1);
 
         $id = $this->connection->executeQuery('SELECT id FROM test_table WHERE str IS NOT NULL')->fetchColumn();
         Assert::eq($this->connection->delete('test_table', ['id' => $id], [ParameterType::INTEGER]), 1);

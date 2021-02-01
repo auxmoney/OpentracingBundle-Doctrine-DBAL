@@ -31,6 +31,8 @@ class TestPreparedStatementsCommand extends Command
         Assert::isInstanceOf($this->connection, TestWrapper::class);
         $selectCount = $this->connection->executeQuery('SELECT COUNT(*) FROM test_table WHERE str IS NOT NULL');
         Assert::eq($selectCount->fetch()['COUNT(*)'], 0);
+        Assert::eq($selectCount->fetchAssociative()['COUNT(*)'], 0);
+        Assert::eq($selectCount->fetchNumeric()[0], 0);
 
         $insert = $this->connection->prepare('INSERT INTO test_table VALUES (null, :str)');
 
