@@ -29,8 +29,6 @@ class TestPreparedStatementsCommand extends Command
     {
         $selectCount = $this->connection->executeQuery('SELECT COUNT(*) FROM test_table WHERE str IS NOT NULL');
         Assert::eq($selectCount->fetch()['COUNT(*)'], 0);
-        Assert::eq($selectCount->fetchAssociative()['COUNT(*)'], 0);
-        Assert::eq($selectCount->fetchNumeric()[0], 0);
 
         $insert = $this->connection->prepare('INSERT INTO test_table VALUES (null, :str)');
 
@@ -38,6 +36,12 @@ class TestPreparedStatementsCommand extends Command
         Assert::eq($insert->rowCount(), 1);
         $selectCount->execute();
         Assert::eq($selectCount->fetchAll()[0]['COUNT(*)'], 1);
+        $selectCount->free();
+        $selectCount->execute();
+        Assert::eq($selectCount->fetchAssociative()['COUNT(*)'], 1);
+        $selectCount->free();
+        $selectCount->execute();
+        Assert::eq($selectCount->fetchNumeric()[0], 1);
 
         $insert->execute(['str' => 'b']);
         Assert::eq($insert->rowCount(), 1);
