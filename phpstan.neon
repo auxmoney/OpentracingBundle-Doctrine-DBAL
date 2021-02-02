@@ -14,3 +14,10 @@ parameters:
     # target methods: beginTransaction(), commit(), rollBack()
     - message: '/Else branch is unreachable because ternary operator condition is always true./'
       path: '%currentWorkingDirectory%/DBAL/TracingDriverConnection.php'
+    # necessary, because  Doctrine\DBAL\Statement implements 2 interfaces in the same time
+    # Doctrine\DBAL\Driver\Statement and Doctrine\DBAL\Abstraction\Result
+    # but Doctrine\DBAL\Driver\Connection::prepare and Doctrine\DBAL\Driver\Connection::query returns only Doctrine\DBAL\Driver\Statement
+    # target methods: fetchAllAssociative(), fetchNumeric(), fetchAssociative(), fetchOne(),
+    # fetchAllNumeric(), fetchFirstColumn(), free()
+    - message: '/Call to an undefined method [a-zA-Z0-9\\_\&\<\>]+::(fetchAllAssociative|fetchNumeric|fetchAssociative|fetchOne|fetchAllNumeric|fetchFirstColumn|free)\(\)/'
+      path: '%currentWorkingDirectory%/DBAL/TracingStatement.php'

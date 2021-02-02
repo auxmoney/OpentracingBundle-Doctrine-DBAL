@@ -44,6 +44,18 @@ children:
         key: db.statement
         value: 'SELECT COUNT(*) FROM test_table WHERE str IS NOT NULL'
   -
+    operationName: 'DBAL: SELECT test_table'
+    tags:
+      -
+        key: auxmoney-opentracing-bundle.span-origin
+        value: 'DBAL:select'
+      -
+        key: db.parameters
+        value: '[]'
+      -
+        key: db.statement
+        value: 'SELECT COUNT(*) FROM test_table WHERE str IS NOT NULL'
+  -
     operationName: 'DBAL: INSERT INTO test_table'
     tags:
       -
@@ -68,6 +80,18 @@ children:
         key: db.statement
         value: 'SELECT COUNT(*) FROM test_table WHERE str IS NOT NULL'
   -
+    operationName: 'DBAL: SELECT test_table'
+    tags:
+      -
+        key: auxmoney-opentracing-bundle.span-origin
+        value: 'DBAL:select'
+      -
+        key: db.parameters
+        value: '[]'
+      -
+        key: db.statement
+        value: 'SELECT COUNT(*) FROM test_table WHERE str IS NOT NULL'
+  -
     operationName: 'DBAL: UPDATE test_table'
     tags:
       -
@@ -79,6 +103,18 @@ children:
       -
         key: db.statement
         value: 'UPDATE test_table SET str = ? WHERE str = ?'
+  -
+    operationName: 'DBAL: SELECT test_table'
+    tags:
+      -
+        key: auxmoney-opentracing-bundle.span-origin
+        value: 'DBAL:select'
+      -
+        key: db.parameters
+        value: '[]'
+      -
+        key: db.statement
+        value: 'SELECT COUNT(*) FROM test_table WHERE str IS NOT NULL'
   -
     operationName: 'DBAL: SELECT test_table'
     tags:

@@ -38,6 +38,13 @@ class TestPreparedStatementsCommand extends Command
         Assert::eq($insert->rowCount(), 1);
         $selectCount->execute();
         Assert::eq($selectCount->fetchAll()[0]['COUNT(*)'], 1);
+        $selectCount->free();
+        $selectCount->execute();
+        Assert::eq($selectCount->fetchAssociative()['COUNT(*)'], 1);
+        $selectCount->free();
+        $selectCount->execute();
+        Assert::eq($selectCount->fetchNumeric()[0], 1);
+
 
         $insert->execute(['str' => 'b']);
         Assert::eq($insert->rowCount(), 1);
