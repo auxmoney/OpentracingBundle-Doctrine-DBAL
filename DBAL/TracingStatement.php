@@ -11,7 +11,7 @@ use IteratorAggregate;
  * @SuppressWarnings(PHPMD.TooManyPublicMethods)
  * @implements IteratorAggregate<Statement>
  */
-final class TracingStatement implements IteratorAggregate, Statement, WrappingStatement
+final class TracingStatement implements IteratorAggregate, StatementCombinedResult, WrappingStatement
 {
     /**
      * @var Statement<Statement>
@@ -163,5 +163,61 @@ final class TracingStatement implements IteratorAggregate, Statement, WrappingSt
     public function getWrappedStatement(): Statement
     {
         return $this->statement;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function fetchAllAssociative(): array
+    {
+        return $this->statement->fetchAllAssociative();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function fetchNumeric()
+    {
+        return $this->statement->fetchNumeric();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function fetchAssociative()
+    {
+        return $this->statement->fetchAssociative();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function fetchOne()
+    {
+        return $this->statement->fetchOne();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function fetchAllNumeric(): array
+    {
+        return $this->statement->fetchAllNumeric();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function fetchFirstColumn(): array
+    {
+        return $this->statement->fetchFirstColumn();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function free(): void
+    {
+        $this->statement->free();
     }
 }
