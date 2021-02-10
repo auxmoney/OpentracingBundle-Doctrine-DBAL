@@ -1,8 +1,7 @@
 # auxmoney OpentracingBundle - Doctrine DBAL
 
-![release](https://github.com/auxmoney/OpentracingBundle-Doctrine-DBAL/workflows/release/badge.svg)
+[![test](https://github.com/auxmoney/OpentracingBundle-Doctrine-DBAL/workflows/test/badge.svg)](https://github.com/auxmoney/OpentracingBundle-Doctrine-DBAL/actions?query=workflow%3Atest)
 ![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/auxmoney/OpentracingBundle-Doctrine-DBAL)
-![Travis (.org)](https://img.shields.io/travis/auxmoney/OpentracingBundle-Doctrine-DBAL)
 ![Coveralls github](https://img.shields.io/coveralls/github/auxmoney/OpentracingBundle-Doctrine-DBAL)
 ![Codacy Badge](https://api.codacy.com/project/badge/Grade/5ccaae3d94cf41c68ad8de83ddcbca1a)
 ![Code Climate maintainability](https://img.shields.io/codeclimate/maintainability/auxmoney/OpentracingBundle-Doctrine-DBAL)
