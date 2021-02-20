@@ -7,6 +7,7 @@ namespace Auxmoney\OpentracingDoctrineDBALBundle\DBAL;
 use Auxmoney\OpentracingBundle\Internal\Constant;
 use Auxmoney\OpentracingBundle\Service\Tracing;
 use Auxmoney\OpentracingDoctrineDBALBundle\OpentracingDoctrineDBALBundle;
+
 use const OpenTracing\Tags\DATABASE_STATEMENT;
 use const OpenTracing\Tags\DATABASE_TYPE;
 use const OpenTracing\Tags\DATABASE_USER;
