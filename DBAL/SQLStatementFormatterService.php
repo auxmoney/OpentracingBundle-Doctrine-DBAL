@@ -25,8 +25,10 @@ final class SQLStatementFormatterService implements SQLStatementFormatter
     private function condenseStatement(string $string): ?string
     {
         $matches = [];
-        if (preg_match('/^(SELECT|DELETE).* FROM ([\S]+)/i', $string, $matches)
-                || preg_match('/^(INSERT INTO|UPDATE) ([\S]+)/i', $string, $matches)) {
+        if (
+            preg_match('/^(SELECT|DELETE).* FROM ([\S]+)/i', $string, $matches)
+                || preg_match('/^(INSERT INTO|UPDATE) ([\S]+)/i', $string, $matches)
+        ) {
             array_shift($matches);
             return implode(' ', $matches);
         }
