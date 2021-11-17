@@ -15,24 +15,24 @@
   "type": "symfony-bundle",
   "license": "MIT",
   "require": {
-    "php": "^7.1.33",
+    "php": "^7.3.27",
     "ext-json": "*",
-    "auxmoney/opentracing-bundle-core": "^0.7.1",
-    "opentracing/opentracing": "1.0.0-beta5@beta",
+    "auxmoney/opentracing-bundle-core": "^1.0",
+    "opentracing/opentracing": "^1.0.1",
     "doctrine/doctrine-bundle": "^1.11|^2.0",
     "doctrine/dbal": "^2.11"
   },
   "require-dev": {
-    "roave/security-advisories": "dev-master",
+    "roave/security-advisories": "dev-latest",
     "phpunit/phpunit": "^7.5",
-    "phpstan/phpstan": "^0.12",
-    "squizlabs/php_codesniffer": "^3.5",
-    "phpmd/phpmd": "^2.7",
-    "php-coveralls/php-coveralls": "^2.2",
+    "phpstan/phpstan": "^1.1",
+    "squizlabs/php_codesniffer": "^3.6",
+    "phpmd/phpmd": "^2.10",
+    "php-coveralls/php-coveralls": "^2.5",
     "symfony/filesystem": "*",
     "symfony/process": "*",
     "symfony/yaml": "*",
-    "mtdowling/jmespath.php": "^2.5"
+    "mtdowling/jmespath.php": "^2.6"
   },
   "autoload": {
     "psr-4": {

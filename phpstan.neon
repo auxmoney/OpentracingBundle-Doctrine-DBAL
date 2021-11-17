@@ -2,12 +2,13 @@ parameters:
   paths:
     - .
 
-  excludes_analyse:
+  excludePaths:
     - Tests/*
     - vendor/*
 
   level: 7
   inferPrivatePropertyTypeFromConstructor: true
+  checkGenericClassInNonGenericObjectType: false
 
   ignoreErrors:
     # necessary, because Doctrine\DBAL\Connection does not comply to Doctrine\DBAL\Driver\Connection, and PHP allows this;
