@@ -32,7 +32,7 @@ final class TracingConnectionFactory
 
     /**
      * @param array<string,mixed> $params
-     * @param string[]|Type[] $mappingTypes
+     * @param array<string,string> $mappingTypes
      * @throws DBALException
      */
     public function createConnection(

@@ -7,7 +7,6 @@ namespace Auxmoney\OpentracingDoctrineDBALBundle\DBAL;
 use Auxmoney\OpentracingBundle\Internal\Constant;
 use Auxmoney\OpentracingBundle\Service\Tracing;
 use Doctrine\DBAL\Driver\Connection as DBALDriverConnection;
-use Doctrine\DBAL\Driver\Statement as DoctrineStatement;
 
 /**
  * @SuppressWarnings(PHPMD.TooManyPublicMethods)
@@ -33,7 +32,7 @@ final class TracingDriverConnection implements DBALDriverConnection, WrappingDri
 
     /**
      * @param string $prepareString
-     * @return iterable<DoctrineStatement>
+     * @return TracingStatement
      */
     public function prepare($prepareString)
     {
@@ -42,7 +41,7 @@ final class TracingDriverConnection implements DBALDriverConnection, WrappingDri
     }
 
     /**
-     * @return iterable<DoctrineStatement>
+     * @return TracingStatement
      */
     public function query()
     {

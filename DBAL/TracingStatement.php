@@ -9,7 +9,6 @@ use IteratorAggregate;
 
 /**
  * @SuppressWarnings(PHPMD.TooManyPublicMethods)
- * @implements IteratorAggregate<Statement>
  */
 final class TracingStatement implements IteratorAggregate, StatementCombinedResult, WrappingStatement
 {
@@ -137,7 +136,7 @@ final class TracingStatement implements IteratorAggregate, StatementCombinedResu
         $result = $this->statement->execute($params);
         $this->spanFactory->afterOperation(
             $this->sql,
-            $params ?? $this->params ?? [],
+            $params ?? $this->params,
             $this->username,
             $this->statement->rowCount()
         );
@@ -153,7 +152,7 @@ final class TracingStatement implements IteratorAggregate, StatementCombinedResu
     }
 
     /**
-     * @return iterable<Statement>
+     * @return Statement<Statement>
      */
     public function getIterator()
     {
