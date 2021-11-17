@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/auxmoney/OpentracingBundle-Doctrine-DBAL/compare/v1.0.0...v1.0.1) (2021-11-17)
+
+
+### Bug Fixes
+
+* functional test method signature ([#24](https://github.com/auxmoney/OpentracingBundle-Doctrine-DBAL/issues/24)) ([339e084](https://github.com/auxmoney/OpentracingBundle-Doctrine-DBAL/commit/339e0841ebc8017f5dd973be4b732483043784f5))
+
 # [1.0.0](https://github.com/auxmoney/OpentracingBundle-Doctrine-DBAL/compare/v0.3.3...v1.0.0) (2021-11-17)
 
 
