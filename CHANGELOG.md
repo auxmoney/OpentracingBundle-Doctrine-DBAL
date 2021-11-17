@@ -1,3 +1,13 @@
+# [1.0.0](https://github.com/auxmoney/OpentracingBundle-Doctrine-DBAL/compare/v0.3.3...v1.0.0) (2021-11-17)
+
+
+* feat!: update core and opentracing to v1 (#23) ([77afc5f](https://github.com/auxmoney/OpentracingBundle-Doctrine-DBAL/commit/77afc5fad58f78ecbf440dc9cce398c1f7668ed8)), closes [#23](https://github.com/auxmoney/OpentracingBundle-Doctrine-DBAL/issues/23)
+
+
+### BREAKING CHANGES
+
+* update core and opentracing to v1
+
 ## [0.3.3](https://github.com/auxmoney/OpentracingBundle-Doctrine-DBAL/compare/v0.3.2...v0.3.3) (2021-02-02)
 
 
