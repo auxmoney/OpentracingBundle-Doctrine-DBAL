@@ -115,7 +115,7 @@ class FunctionalTest extends JaegerConsoleFunctionalTest
         $this->consoleCacheClear();
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->runInTestProject(['symfony', 'console', 'doctrine:database:drop', '--force']);
 
