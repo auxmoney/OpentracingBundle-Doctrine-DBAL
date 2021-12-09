@@ -6,7 +6,7 @@ parameters:
     - Tests/*
     - vendor/*
 
-  level: 7
+  level: 8
   inferPrivatePropertyTypeFromConstructor: true
   checkGenericClassInNonGenericObjectType: false
 

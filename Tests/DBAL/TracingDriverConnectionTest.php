@@ -11,9 +11,12 @@ use Auxmoney\OpentracingDoctrineDBALBundle\DBAL\TracingStatement;
 use Doctrine\DBAL\Driver\Connection as DBALDriverConnection;
 use Doctrine\DBAL\Driver\Statement;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 class TracingDriverConnectionTest extends TestCase
 {
+    use ProphecyTrait;
+
     private $decoratedConnection;
     private $tracing;
     private $spanFactory;
@@ -21,7 +24,7 @@ class TracingDriverConnectionTest extends TestCase
     /** @var TracingDriverConnection */
     private $subject;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->decoratedConnection = $this->prophesize(DBALDriverConnection::class);

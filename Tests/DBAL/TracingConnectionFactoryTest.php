@@ -12,16 +12,19 @@ use Doctrine\Bundle\DoctrineBundle\ConnectionFactory as DoctrineConnectionFactor
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Driver\PDOSqlite\Driver;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 class TracingConnectionFactoryTest extends TestCase
 {
+    use ProphecyTrait;
+
     private $connectionFactory;
     private $tracing;
     private $spanFactory;
     /** @var TracingConnectionFactory */
     private $subject;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->connectionFactory = $this->prophesize(DoctrineConnectionFactory::class);

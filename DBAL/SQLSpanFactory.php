@@ -68,7 +68,7 @@ final class SQLSpanFactory implements SpanFactory
             OpentracingDoctrineDBALBundle::AUXMONEY_OPENTRACING_BUNDLE_TYPE
         );
         $this->tracing->setTagOfActiveSpan(DATABASE_TYPE, 'sql');
-        if ($this->tagUser) {
+        if ($this->tagUser && $username) {
             $this->tracing->setTagOfActiveSpan(DATABASE_USER, $username);
         }
     }

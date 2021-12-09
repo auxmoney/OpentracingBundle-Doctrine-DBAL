@@ -8,9 +8,12 @@ use Auxmoney\OpentracingBundle\Service\Tracing;
 use Auxmoney\OpentracingDoctrineDBALBundle\DBAL\SQLSpanFactory;
 use Auxmoney\OpentracingDoctrineDBALBundle\DBAL\SQLStatementFormatter;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 class SQLSpanFactoryTest extends TestCase
 {
+    use ProphecyTrait;
+
     private $statementFormatter;
     private $tracing;
     private $tagFullStatement;
@@ -20,7 +23,7 @@ class SQLSpanFactoryTest extends TestCase
     /** @var SQLSpanFactory */
     private $subject;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->statementFormatter = $this->prophesize(SQLStatementFormatter::class);

@@ -12,7 +12,7 @@ class SQLStatementFormatterServiceTest extends TestCase
     /** @var SQLStatementFormatterService */
     private $subject;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
