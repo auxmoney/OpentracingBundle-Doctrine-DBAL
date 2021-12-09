@@ -13,7 +13,7 @@ class OpentracingDoctrineDBALExtensionTest extends TestCase
     /** @var OpentracingDoctrineDBALExtension */
     private $subject;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

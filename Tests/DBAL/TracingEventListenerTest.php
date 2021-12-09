@@ -12,16 +12,19 @@ use Doctrine\DBAL\Driver\Connection as DBALDriverConnection;
 use Doctrine\DBAL\Event\ConnectionEventArgs;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 class TracingEventListenerTest extends TestCase
 {
+    use ProphecyTrait;
+
     private $tracing;
     private $spanFactory;
 
     /** @var TracingEventListener */
     private $subject;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->tracing = $this->prophesize(Tracing::class);

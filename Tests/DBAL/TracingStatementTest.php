@@ -8,9 +8,12 @@ use Auxmoney\OpentracingDoctrineDBALBundle\DBAL\SpanFactory;
 use Auxmoney\OpentracingDoctrineDBALBundle\DBAL\StatementCombinedResult;
 use Auxmoney\OpentracingDoctrineDBALBundle\DBAL\TracingStatement;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 class TracingStatementTest extends TestCase
 {
+    use ProphecyTrait;
+
     private $statement;
     private $spanFactory;
     private $sql;
@@ -18,7 +21,7 @@ class TracingStatementTest extends TestCase
     /** @var TracingStatement */
     private $subject;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->statement = $this->prophesize(StatementCombinedResult::class);
