@@ -21,7 +21,6 @@ jobs:
     strategy:
       matrix:
         symfony:
-          - '3.4.*'
           - '4.4.*'
           - '5.3.*'
         php:
@@ -65,7 +64,6 @@ jobs:
     strategy:
       matrix:
         symfony:
-          - '3.4.*'
           - '4.4.*'
           - '5.3.*'
         php:
