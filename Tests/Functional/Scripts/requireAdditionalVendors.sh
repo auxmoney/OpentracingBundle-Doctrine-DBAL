@@ -2,9 +2,15 @@
 shopt -s extglob
 
 cd build/testproject/
-composer require auxmoney/opentracing-bundle-doctrine-dbal webmozart/assert --no-scripts
+composer config extra.symfony.docker false
+VENDOR_VERSION=""
+CURRENT_REF=${GITHUB_HEAD_REF:-$GITHUB_REF}
+CURRENT_BRANCH=${CURRENT_REF#refs/heads/}
+if [[ $CURRENT_BRANCH -ne "master" ]]; then
+    composer config minimum-stability dev
+    VENDOR_VERSION=":dev-${CURRENT_BRANCH}"
+fi
+composer require auxmoney/opentracing-bundle-doctrine-dbal${VENDOR_VERSION} webmozart/assert --no-scripts
 composer fix-recipes
-rm -fr vendor/auxmoney/opentracing-bundle-doctrine-dbal/*
-cp -r ../../!(build|vendor) vendor/auxmoney/opentracing-bundle-doctrine-dbal
 composer dump-autoload
 cd ../../
