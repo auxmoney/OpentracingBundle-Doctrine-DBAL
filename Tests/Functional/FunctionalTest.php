@@ -84,7 +84,25 @@ class FunctionalTest extends JaegerConsoleFunctionalTest
         self::assertCount($spanCount, $spans);
 
         $traceAsYAML = $this->getSpansAsYAML($spans, '[].{operationName: operationName, startTime: startTime, spanID: spanID, references: references, tags: tags[?key==\'db.statement\' || key==\'db.parameters\' || key==\'db.row_count\' || key==\'db.user\' || key==\'db.transaction.end\' || key==\'command.exit-code\' || key==\'auxmoney-opentracing-bundle.span-origin\'].{key: key, value: value}}');
-        self::assertStringEqualsFile(__DIR__ . '/FunctionalTest.' . $command . '.expected.yaml', $traceAsYAML);
+
+        /*
+         * TODO: not sure why, but from 8.1 on, some component actually preserves the strict types from the jaeger response, e.g. response contained tags like
+         * > {"1": 2}
+         *
+         * this was parsed up until < 8.1 into:
+         * > {"1": "2"}
+         *
+         * this is parsed >= 8.1 into:
+         * > {"1": 2}
+         *
+         * may be deleted / fixed as soon as root cause of this behaviour is found / vendors are fixed
+         */
+        $strictSuffix = '';
+        if (PHP_VERSION_ID >= 80100) {
+            $strictSuffix = '.strict';
+        }
+
+        self::assertStringEqualsFile(__DIR__ . '/FunctionalTest.' . $command . $strictSuffix . '.expected.yaml', $traceAsYAML);
     }
 
     private function setupTestProjectDbal(string $project, bool $withORM): void

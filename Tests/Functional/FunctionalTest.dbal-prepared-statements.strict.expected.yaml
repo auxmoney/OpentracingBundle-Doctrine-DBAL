@@ -1,0 +1,165 @@
+operationName: 'test:doctrine:dbal-prepared-statements'
+tags:
+  -
+    key: auxmoney-opentracing-bundle.span-origin
+    value: 'core:command'
+  -
+    key: command.exit-code
+    value: 0
+children:
+  -
+    operationName: 'DBAL: SELECT test_table'
+    tags:
+      -
+        key: auxmoney-opentracing-bundle.span-origin
+        value: 'DBAL:select'
+      -
+        key: db.parameters
+        value: '[]'
+      -
+        key: db.statement
+        value: 'SELECT COUNT(*) FROM test_table WHERE str IS NOT NULL'
+  -
+    operationName: 'DBAL: INSERT INTO test_table'
+    tags:
+      -
+        key: auxmoney-opentracing-bundle.span-origin
+        value: 'DBAL:insert'
+      -
+        key: db.parameters
+        value: '{"str":"a"}'
+      -
+        key: db.statement
+        value: 'INSERT INTO test_table VALUES (null, :str)'
+  -
+    operationName: 'DBAL: SELECT test_table'
+    tags:
+      -
+        key: auxmoney-opentracing-bundle.span-origin
+        value: 'DBAL:select'
+      -
+        key: db.parameters
+        value: '[]'
+      -
+        key: db.statement
+        value: 'SELECT COUNT(*) FROM test_table WHERE str IS NOT NULL'
+  -
+    operationName: 'DBAL: SELECT test_table'
+    tags:
+      -
+        key: auxmoney-opentracing-bundle.span-origin
+        value: 'DBAL:select'
+      -
+        key: db.parameters
+        value: '[]'
+      -
+        key: db.statement
+        value: 'SELECT COUNT(*) FROM test_table WHERE str IS NOT NULL'
+  -
+    operationName: 'DBAL: SELECT test_table'
+    tags:
+      -
+        key: auxmoney-opentracing-bundle.span-origin
+        value: 'DBAL:select'
+      -
+        key: db.parameters
+        value: '[]'
+      -
+        key: db.statement
+        value: 'SELECT COUNT(*) FROM test_table WHERE str IS NOT NULL'
+  -
+    operationName: 'DBAL: INSERT INTO test_table'
+    tags:
+      -
+        key: auxmoney-opentracing-bundle.span-origin
+        value: 'DBAL:insert'
+      -
+        key: db.parameters
+        value: '{"str":"b"}'
+      -
+        key: db.statement
+        value: 'INSERT INTO test_table VALUES (null, :str)'
+  -
+    operationName: 'DBAL: SELECT test_table'
+    tags:
+      -
+        key: auxmoney-opentracing-bundle.span-origin
+        value: 'DBAL:select'
+      -
+        key: db.parameters
+        value: '[]'
+      -
+        key: db.statement
+        value: 'SELECT COUNT(*) FROM test_table WHERE str IS NOT NULL'
+  -
+    operationName: 'DBAL: SELECT test_table'
+    tags:
+      -
+        key: auxmoney-opentracing-bundle.span-origin
+        value: 'DBAL:select'
+      -
+        key: db.parameters
+        value: '{"1":"a"}'
+      -
+        key: db.statement
+        value: 'SELECT str FROM test_table WHERE str = ?'
+  -
+    operationName: 'DBAL: UPDATE test_table'
+    tags:
+      -
+        key: auxmoney-opentracing-bundle.span-origin
+        value: 'DBAL:update'
+      -
+        key: db.parameters
+        value: '{"1":null,"2":"a"}'
+      -
+        key: db.statement
+        value: 'UPDATE test_table SET str = ? WHERE str = ?'
+  -
+    operationName: 'DBAL: SELECT test_table'
+    tags:
+      -
+        key: auxmoney-opentracing-bundle.span-origin
+        value: 'DBAL:select'
+      -
+        key: db.parameters
+        value: '[]'
+      -
+        key: db.statement
+        value: 'SELECT COUNT(*) FROM test_table WHERE str IS NOT NULL'
+  -
+    operationName: 'DBAL: DELETE test_table'
+    tags:
+      -
+        key: auxmoney-opentracing-bundle.span-origin
+        value: 'DBAL:delete'
+      -
+        key: db.parameters
+        value: '[]'
+      -
+        key: db.statement
+        value: 'DELETE FROM test_table WHERE str IS NOT NULL'
+  -
+    operationName: 'DBAL: SELECT test_table'
+    tags:
+      -
+        key: auxmoney-opentracing-bundle.span-origin
+        value: 'DBAL:select'
+      -
+        key: db.parameters
+        value: '[]'
+      -
+        key: db.statement
+        value: 'SELECT COUNT(*) FROM test_table WHERE str IS NOT NULL'
+  -
+    operationName: 'DBAL: UPDATE test_table'
+    tags:
+      -
+        key: auxmoney-opentracing-bundle.span-origin
+        value: 'DBAL:update'
+      -
+        key: db.parameters
+        value: '[]'
+      -
+        key: db.statement
+        value: 'UPDATE test_table SET str = NULL WHERE str IS NOT NULL'

@@ -154,7 +154,7 @@ final class TracingStatement implements IteratorAggregate, StatementCombinedResu
     /**
      * @return Statement<Statement>
      */
-    public function getIterator()
+    public function getIterator(): Statement
     {
         return $this->statement;
     }

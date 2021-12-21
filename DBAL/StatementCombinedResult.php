@@ -9,5 +9,4 @@ use Doctrine\DBAL\Driver\Statement;
 
 interface StatementCombinedResult extends Statement, Result
 {
-
 }

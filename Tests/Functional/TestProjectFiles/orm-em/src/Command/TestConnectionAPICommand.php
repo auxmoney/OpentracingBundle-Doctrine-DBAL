@@ -39,7 +39,7 @@ class TestConnectionAPICommand extends Command
         Assert::eq($this->connection->fetchOne('SELECT COUNT(*) FROM test_table WHERE str IS NOT NULL'), 2);
 
         Assert::eq($this->connection->update('test_table', ['str' => null], ['str' => 'a'], [ParameterType::STRING, ParameterType::STRING]), 1);
-        Assert::eq($this->connection->fetchArray('SELECT COUNT(*) FROM test_table WHERE str IS NOT NULL')[0][0], 1);
+        Assert::eq($this->connection->fetchArray('SELECT COUNT(*) FROM test_table WHERE str IS NOT NULL')[0], 1);
         Assert::eq($this->connection->fetchAllNumeric('SELECT COUNT(*) FROM test_table WHERE str IS NOT NULL')[0][0], 1);
 
         $id = $this->connection->executeQuery('SELECT id FROM test_table WHERE str IS NOT NULL')->fetchColumn();
