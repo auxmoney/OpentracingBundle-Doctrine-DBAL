@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/auxmoney/OpentracingBundle-Doctrine-DBAL/compare/v1.0.1...v1.1.0) (2021-12-21)
+
+
+### Features
+
+* support PHP 8 ([#26](https://github.com/auxmoney/OpentracingBundle-Doctrine-DBAL/issues/26)) ([98029eb](https://github.com/auxmoney/OpentracingBundle-Doctrine-DBAL/commit/98029eb92e4171e4c042574c0686f33893b78e7b))
+
 ## [1.0.1](https://github.com/auxmoney/OpentracingBundle-Doctrine-DBAL/compare/v1.0.0...v1.0.1) (2021-11-17)
 
 
