@@ -15,8 +15,8 @@ use Doctrine\DBAL\Types\Type;
 
 final class TracingConnectionFactory
 {
-    private $connectionFactory;
-    private $eventListener;
+    private DoctrineConnectionFactory $connectionFactory;
+    private TracingEventListener $eventListener;
 
     public function __construct(
         DoctrineConnectionFactory $connectionFactory,

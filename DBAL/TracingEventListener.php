@@ -12,8 +12,8 @@ use ReflectionObject;
 
 final class TracingEventListener
 {
-    private $tracing;
-    private $spanFactory;
+    private Tracing $tracing;
+    private SpanFactory $spanFactory;
 
     public function __construct(
         Tracing $tracing,

@@ -19,20 +19,17 @@ class TracingConnectionFactoryTest extends TestCase
     use ProphecyTrait;
 
     private $connectionFactory;
-    private $tracing;
-    private $spanFactory;
-    /** @var TracingConnectionFactory */
-    private $subject;
+    private TracingConnectionFactory $subject;
 
     public function setUp(): void
     {
         parent::setUp();
         $this->connectionFactory = $this->prophesize(DoctrineConnectionFactory::class);
-        $this->tracing = $this->prophesize(Tracing::class);
-        $this->spanFactory = $this->prophesize(SpanFactory::class);
+        $tracing = $this->prophesize(Tracing::class);
+        $spanFactory = $this->prophesize(SpanFactory::class);
 
         $this->subject = new TracingConnectionFactory(
-            $this->connectionFactory->reveal(), $this->tracing->reveal(), $this->spanFactory->reveal()
+            $this->connectionFactory->reveal(), $tracing->reveal(), $spanFactory->reveal()
         );
     }
 

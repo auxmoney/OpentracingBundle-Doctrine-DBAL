@@ -10,8 +10,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class OpentracingDoctrineDBALExtensionTest extends TestCase
 {
-    /** @var OpentracingDoctrineDBALExtension */
-    private $subject;
+    private OpentracingDoctrineDBALExtension $subject;
 
     public function setUp(): void
     {

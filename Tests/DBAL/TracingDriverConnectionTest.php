@@ -20,9 +20,8 @@ class TracingDriverConnectionTest extends TestCase
     private $decoratedConnection;
     private $tracing;
     private $spanFactory;
-    private $username;
-    /** @var TracingDriverConnection */
-    private $subject;
+    private string $username;
+    private TracingDriverConnection $subject;
 
     public function setUp(): void
     {
