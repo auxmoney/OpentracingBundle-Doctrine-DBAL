@@ -18,7 +18,7 @@ final class TracingStatement implements IteratorAggregate, StatementCombinedResu
     private $statement;
     private string $sql;
     private SpanFactory $spanFactory;
-    private ?string $username = null;
+    private ?string $username;
     /**
      * @var array<mixed>
      */

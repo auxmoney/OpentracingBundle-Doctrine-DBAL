@@ -16,7 +16,7 @@ final class TracingDriverConnection implements DBALDriverConnection, WrappingDri
     private DBALDriverConnection $decoratedConnection;
     private Tracing $tracing;
     private SpanFactory $spanFactory;
-    private ?string $username = null;
+    private ?string $username;
 
     public function __construct(
         DBALDriverConnection $decoratedConnection,
