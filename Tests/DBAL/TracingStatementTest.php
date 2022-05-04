@@ -16,10 +16,9 @@ class TracingStatementTest extends TestCase
 
     private $statement;
     private $spanFactory;
-    private $sql;
-    private $username;
-    /** @var TracingStatement */
-    private $subject;
+    private string $sql;
+    private string $username;
+    private TracingStatement $subject;
 
     public function setUp(): void
     {

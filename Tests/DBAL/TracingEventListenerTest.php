@@ -20,9 +20,7 @@ class TracingEventListenerTest extends TestCase
 
     private $tracing;
     private $spanFactory;
-
-    /** @var TracingEventListener */
-    private $subject;
+    private TracingEventListener $subject;
 
     public function setUp(): void
     {

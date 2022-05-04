@@ -13,10 +13,10 @@ use Doctrine\DBAL\Driver\Connection as DBALDriverConnection;
  */
 final class TracingDriverConnection implements DBALDriverConnection, WrappingDriverConnection
 {
-    private $decoratedConnection;
-    private $tracing;
-    private $spanFactory;
-    private $username;
+    private DBALDriverConnection $decoratedConnection;
+    private Tracing $tracing;
+    private SpanFactory $spanFactory;
+    private ?string $username;
 
     public function __construct(
         DBALDriverConnection $decoratedConnection,
@@ -49,7 +49,7 @@ final class TracingDriverConnection implements DBALDriverConnection, WrappingDri
         $parameters = array_slice($args, 1);
         $this->spanFactory->beforeOperation($args[0]);
         $result = $this->decoratedConnection->query(...$args);
-        $this->spanFactory->afterOperation($args[0], $parameters, $this->username, $result->rowCount());
+        $this->spanFactory->afterOperation($args[0], $parameters, $this->username, (int) $result->rowCount());
         return new TracingStatement($result, $this->spanFactory, $args[0], $this->username);
     }
 
@@ -70,7 +70,7 @@ final class TracingDriverConnection implements DBALDriverConnection, WrappingDri
     {
         $this->spanFactory->beforeOperation($statement);
         $result = $this->decoratedConnection->exec($statement);
-        $this->spanFactory->afterOperation($statement, [], $this->username, $result);
+        $this->spanFactory->afterOperation($statement, [], $this->username, (int) $result);
         return $result;
     }
 

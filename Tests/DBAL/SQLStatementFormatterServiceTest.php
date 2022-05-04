@@ -9,8 +9,7 @@ use PHPUnit\Framework\TestCase;
 
 class SQLStatementFormatterServiceTest extends TestCase
 {
-    /** @var SQLStatementFormatterService */
-    private $subject;
+    private SQLStatementFormatterService $subject;
 
     public function setUp(): void
     {

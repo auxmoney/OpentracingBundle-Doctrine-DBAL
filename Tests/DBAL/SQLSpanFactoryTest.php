@@ -16,12 +16,11 @@ class SQLSpanFactoryTest extends TestCase
 
     private $statementFormatter;
     private $tracing;
-    private $tagFullStatement;
-    private $tagParameters;
-    private $tagRowCount;
-    private $tagUser;
-    /** @var SQLSpanFactory */
-    private $subject;
+    private string $tagFullStatement;
+    private string $tagParameters;
+    private string $tagRowCount;
+    private string $tagUser;
+    private SQLSpanFactory $subject;
 
     public function setUp(): void
     {

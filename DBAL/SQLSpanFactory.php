@@ -16,12 +16,12 @@ use const OpenTracing\Tags\SPAN_KIND_RPC_CLIENT;
 
 final class SQLSpanFactory implements SpanFactory
 {
-    private $statementFormatter;
-    private $tracing;
-    private $tagFullStatement;
-    private $tagParameters;
-    private $tagRowCount;
-    private $tagUser;
+    private SQLStatementFormatter $statementFormatter;
+    private Tracing $tracing;
+    private bool $tagFullStatement;
+    private bool $tagParameters;
+    private bool $tagRowCount;
+    private bool $tagUser;
 
     public function __construct(
         SQLStatementFormatter $statementFormatter,

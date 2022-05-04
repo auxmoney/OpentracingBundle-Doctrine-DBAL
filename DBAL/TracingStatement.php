@@ -16,9 +16,9 @@ final class TracingStatement implements IteratorAggregate, StatementCombinedResu
      * @var Statement<Statement>
      */
     private $statement;
-    private $sql;
-    private $spanFactory;
-    private $username;
+    private string $sql;
+    private SpanFactory $spanFactory;
+    private ?string $username;
     /**
      * @var array<mixed>
      */
@@ -138,7 +138,7 @@ final class TracingStatement implements IteratorAggregate, StatementCombinedResu
             $this->sql,
             $params ?? $this->params,
             $this->username,
-            $this->statement->rowCount()
+            (int) $this->statement->rowCount()
         );
         return $result;
     }
