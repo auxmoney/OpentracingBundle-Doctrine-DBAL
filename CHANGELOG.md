@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/auxmoney/OpentracingBundle-Doctrine-DBAL/compare/v1.1.0...v1.2.0) (2022-05-04)
+
+
+### Features
+
+* support Symfony 6 ([#28](https://github.com/auxmoney/OpentracingBundle-Doctrine-DBAL/issues/28)) ([8e2f0bf](https://github.com/auxmoney/OpentracingBundle-Doctrine-DBAL/commit/8e2f0bf0336216ddc7e527a049398de88f884b51))
+
 # [1.1.0](https://github.com/auxmoney/OpentracingBundle-Doctrine-DBAL/compare/v1.0.1...v1.1.0) (2021-12-21)
 
 
