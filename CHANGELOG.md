@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/auxmoney/OpentracingBundle-Doctrine-DBAL/compare/v1.2.0...v1.2.1) (2022-07-22)
+
+
+### Bug Fixes
+
+* symfony/flex plugin ([#33](https://github.com/auxmoney/OpentracingBundle-Doctrine-DBAL/issues/33)) ([0a8681e](https://github.com/auxmoney/OpentracingBundle-Doctrine-DBAL/commit/0a8681ec7d73740716d9155651246c1265b619b3))
+
 # [1.2.0](https://github.com/auxmoney/OpentracingBundle-Doctrine-DBAL/compare/v1.1.0...v1.2.0) (2022-05-04)
 
 
