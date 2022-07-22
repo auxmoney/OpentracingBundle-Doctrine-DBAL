@@ -49,18 +49,21 @@ jobs:
           Tests/Functional/Scripts/downloadComposer.sh
           composer config extra.symfony.require "${{ matrix.symfony }}"
           composer config extra.symfony.allow-contrib true
+          composer config --no-plugins allow-plugins.symfony/flex true
           # adds flex, suppress composer.lock
           composer require symfony/flex --no-update
           # create a lock file
           composer install
           # updates to SYMFONY_VERSION, but runs recipes
-          composer update symfony/*
+          composer update symfony/* --with-all-dependencies
           # reset tracked files
           git reset --hard
           # clean up recipe generated files and folders
           git clean -df
       - name: execute unit tests
-        run: composer run-script quality
+        run: |
+          composer config --no-plugins allow-plugins.symfony/flex true
+          composer run-script quality
       - name: upload coverage
         env:
           COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -102,12 +105,13 @@ jobs:
           Tests/Functional/Scripts/downloadComposer.sh
           composer config extra.symfony.require "${{ matrix.symfony }}"
           composer config extra.symfony.allow-contrib true
+          composer config --no-plugins allow-plugins.symfony/flex true
           # adds flex, suppress composer.lock
           composer require symfony/flex --no-update
           # create a lock file
           composer install
           # updates to SYMFONY_VERSION, but runs recipes
-          composer update symfony/*
+          composer update symfony/* --with-all-dependencies
           # reset tracked files
           git reset --hard
           # clean up recipe generated files and folders
@@ -119,6 +123,8 @@ jobs:
       - name: execute functional tests
         env:
           SYMFONY_VERSION: ${{ matrix.symfony }}
-        run: composer run-script phpunit-functional
+        run: |
+          composer config --no-plugins allow-plugins.symfony/flex true
+          composer run-script phpunit-functional
       - name: show running containers
         run: docker ps
