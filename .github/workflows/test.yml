@@ -55,7 +55,7 @@ jobs:
           # create a lock file
           composer install
           # updates to SYMFONY_VERSION, but runs recipes
-          composer update symfony/*
+          composer update symfony/* --with-all-dependencies
           # reset tracked files
           git reset --hard
           # clean up recipe generated files and folders
@@ -111,7 +111,7 @@ jobs:
           # create a lock file
           composer install
           # updates to SYMFONY_VERSION, but runs recipes
-          composer update symfony/*
+          composer update symfony/* --with-all-dependencies
           # reset tracked files
           git reset --hard
           # clean up recipe generated files and folders
