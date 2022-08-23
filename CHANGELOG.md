@@ -1,3 +1,10 @@
+## [1.2.2](https://github.com/auxmoney/OpentracingBundle-Doctrine-DBAL/compare/v1.2.1...v1.2.2) (2022-08-23)
+
+
+### Bug Fixes
+
+* symfony cli installation ([#34](https://github.com/auxmoney/OpentracingBundle-Doctrine-DBAL/issues/34)) ([1c6d7a8](https://github.com/auxmoney/OpentracingBundle-Doctrine-DBAL/commit/1c6d7a850b1f93ca6e21b2f3d8ffe13f0a1f3360))
+
 ## [1.2.1](https://github.com/auxmoney/OpentracingBundle-Doctrine-DBAL/compare/v1.2.0...v1.2.1) (2022-07-22)
 
 
