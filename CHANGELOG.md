@@ -1,3 +1,10 @@
+## [1.2.3](https://github.com/auxmoney/OpentracingBundle-Doctrine-DBAL/compare/v1.2.2...v1.2.3) (2023-05-03)
+
+
+### Bug Fixes
+
+* update supported PHP and Symfony versions + fix composer behaviour + remove coveralls integration ([#37](https://github.com/auxmoney/OpentracingBundle-Doctrine-DBAL/issues/37)) ([46e23ab](https://github.com/auxmoney/OpentracingBundle-Doctrine-DBAL/commit/46e23ab817f2b8689e321e6d8ad297067fa7f9ee))
+
 ## [1.2.2](https://github.com/auxmoney/OpentracingBundle-Doctrine-DBAL/compare/v1.2.1...v1.2.2) (2022-08-23)
 
 
